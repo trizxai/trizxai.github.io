@@ -1,0 +1,1951 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="mdbook-admonish.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00.html">TRIZ x AI</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">基礎篇</li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 九宮格</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 小精靈法(SLP)</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> STC</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">4.</strong> 最終理想解</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> 40發明原理</a></li><li class="chapter-item expanded "><a href="ch06.html"><strong aria-hidden="true">6.</strong> 資源</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">應用篇</li><li class="chapter-item expanded "><a href="ch07.html"><strong aria-hidden="true">7.</strong> 技術矛盾</a></li><li class="chapter-item expanded "><a href="ch08.html"><strong aria-hidden="true">8.</strong> 功能分析</a></li><li class="chapter-item expanded "><a href="ch09.html"><strong aria-hidden="true">9.</strong> 創新情境問卷(ISQ)</a></li><li class="chapter-item expanded "><a href="ch10.html"><strong aria-hidden="true">10.</strong> 科學效應</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><div>關於作者</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="triz-x-ai"><a class="header" href="#triz-x-ai">TRIZ x AI</a></h1>
+<ul>
+<li>ChatGPT應用於TRIZ的50個魔咒(Prompt) </li>
+<li>50 Prompts of ChatGPT applied to TRIZ </li>
+<li>Inventive Problem Solving with ChatGPT-Methods of building invention machine </li>
+</ul>
+<h2 id="概述"><a class="header" href="#概述">概述</a></h2>
+<hr />
+<ul>
+<li>近來ChatGPT迅速竄紅，如何優化LLM，使其能協助我們已成為顯學，尤其是互動式對談的Prompt Engineering更成為新興的發展焦點。 
+Prompt Stuffing 將包含事實的文件或資料餵進提示 (prompt)，引導模型僅依據這些資訊生成回覆的內容，這也是提示 metacontext 設計的技巧之一。 </li>
+<li>創新本質上就需要「在框架外思考」(Think out of th box)，目前流行的chatGPT背後的LLM，恰巧具有跳脫思考的特質，應用這種特性可以幫助我們進行創新思考，也就像是有個夥伴跟你共同腦力激盪一樣。本書將以TRIZ常用的概念及論述以Stuffing的方式強化LLM(Large Language Model)大語言模型，藉由此具備TRIZ專業的語言模型協助以TRIZ方法解決發明問題。</li>
+<li>內容包括基礎篇與進階篇，基礎篇包括：九宮格、小精靈法(SLP)、STC、最終理想解、40發明原理、資源；進階篇包括：技術矛盾、功能分析、創新情境問卷(ISQ)、科學效應等小節。每小節介紹TRIZ的方法概述與ChatGPT的Prompt範例。所有的示例使用chtGPT 4.0, 也就是付費版本進行演示，由於LLM公開版不斷的變化中，所以回答會有所不同</li>
+</ul>
+<hr />
+<p>後續的50個Prommpt(魔咒)會用下列的方式編排。
+我們提示給chatGPT的魔咒以Prompt區塊表示如下：</p>
+<div id="admonition-prompt" class="admonition info">
+<div class="admonition-title">
+<p>Prompt</p>
+<p><a class="admonition-anchor-link" href="ch00.html#admonition-prompt"></a></p>
+</div>
+<div>
+<pre><code>這是提供chatGPT有關TRIZ知識的Prompt
+或是詢問chatGPT的Prompt
+可以用右方的icon複製
+</code></pre>
+</div>
+</div>
+chatGPT的回應以Assistant區塊顯示如下：
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch00.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>這是Assistant的回答</p>
+</div>
+</div>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="九宮格"><a class="header" href="#九宮格">九宮格</a></h1>
+<p>九宮格，顧名思義是由3x3的九個格子組成(如下)，從左至右是時間的軸向，過去、現在、未來；
+由上至下是空間軸向，代表超系統、系統、子系統。藉此從時間與空間對問題形成較佳的認識與洞察。
+使用方式是在格子裡填入技術系統或元件、產生的問題、缺點、好處、產生任何的變化、關聯的屬性與資源。
+九宮格分析的目的是找出輸入/處理/輸出的因果關係、發掘改良/創新機會、找出技術/物理矛盾、
+找出不足，有用，欠缺，過多效應、找出資源、找出解答應用的潛力。</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>過去</th><th>現在</th><th>未來</th></tr></thead><tbody>
+<tr><td>超系統</td><td></td><td></td><td></td></tr>
+<tr><td>系統</td><td></td><td></td><td></td></tr>
+<tr><td>子系統</td><td></td><td></td><td></td></tr>
+</tbody></table>
+</div>
+<p>首先，先將九宮格相關的知識放到Prompt中提供給LLM模型。</p>
+<div id="admonition-prompt-01" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 01</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-prompt-01"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問，要知道「九宮格」是TRIZ的解題分析工具，它是3*3的表格，
+橫列由上至下是超系統、系統、子系統；縱行從左至右是過去、現在、未來。
+因此現在的系統在中間，每個格子可以填入技術系統或元件、產生的問題、缺點、
+好處、產生任何的變化、關聯的屬性與資源。分析的目的是找出輸入/處理/輸出的
+因果關係、發掘改良/創新機會、找出技術/物理矛盾、找出不足，有用，欠缺，
+過多效應、找出資源、找出解答應用的潛力。
+</code></pre>
+</div>
+</div>
+chatGPT會回應它認知到的訊息。
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>這是一個很好的說明TRIZ的「九宮格」工具。這個工具對於理解和改進技術系統的各個方面有很大的幫助，包括在過去、現在和未來的情況下對超系統、系統和子系統的探索。每個格子的內容對於分析系統的特性和資源，以及找出可能的創新或改進區域，都非常有用。 
+以下是這個工具如何運作的一些具體步驟： </p>
+<ol>
+<li>確定系統的範疇和元素。例如，如果你正在研究一部汽車，那麼系統就是汽車本身，子系統可能包括引擎、煞車系統和內飾，而超系統可能包括交通網路、汽車市場等。 </li>
+<li>在每個格子中填入相關的信息。對於過去、現在和未來的超系統、系統和子系統，你可以標出它們的主要特點、問題、優點，以及可能的變化。 </li>
+<li>進行深度分析。例如，你可以找出系統的因果關係、技術或物理矛盾，以及可能的創新機會。你也可以評估每個元素的價值，找出不足，有用，欠缺，過多效應。 </li>
+<li>根據這個分析，找出可能的解決方案和應用的潛力。你可以考慮利用系統內已經存在的資源，或是找出新的資源。 
+透過九宮格，你能更全面地理解你的系統，並從多個角度找出改進的方法，這是TRIZ的強大之處。</li>
+</ol>
+</div>
+</div>
+<hr />
+<p>我們可以用類似設定變數的方式，利用AI chatGPT協助我們進行九宮格分析。</p>
+<div id="admonition-prompt-02" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 02</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-prompt-02"></a></p>
+</div>
+<div>
+<pre><code>請以九宮格分析[系統]，並將結果以表格表示 
+[系統] 汽車
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>我們可以使用九宮格分析汽車系統的過去、現在與未來，以及其相關的超系統和子系統。這裡是一個簡單的例子： </p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>過去</th><th>現在</th><th>未來</th></tr></thead><tbody>
+<tr><td>超系統</td><td>馬車、火車作為主要交通工具。</td><td>城市交通網絡，汽車市場。</td><td>智慧城市，自動駕駛汽車與電動車的普及。</td></tr>
+<tr><td>系統</td><td>内燃引擎汽車，傳統機械製造。</td><td>混合動力汽車，加入許多電子控制系統。</td><td>全電動汽車，高度自動化和互聯網連接。</td></tr>
+<tr><td>子系統</td><td>傳統機械引擎，人工駕駛，機械刹車系統。</td><td>混合動力引擎，自動駕駛輔助系統，電子刹車系統。</td><td>電動馬達，全自動駕駛，更高效的能源儲存系統。</td></tr>
+</tbody></table>
+</div>
+<p>這個表格是一個簡化的例子，真正的分析可能需要更深入地探討每個部分的細節。例如，你可能需要進一步分析各種技術變革帶來的問題、優點，以及可能的創新機會。你也可能需要考慮各種社會、經濟、環境因素如何影響汽車系統的發展。</p>
+</div>
+</div>
+<hr />
+<p>當然，也可以依需求要求它進一步分析。</p>
+<div id="admonition-prompt-03" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 03</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-prompt-03"></a></p>
+</div>
+<div>
+<pre><code>進一步分析上述表格中每個格子的問題或缺點。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>以下是對於每個九宮格的進一步問題和缺點的分析：</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>過去</th><th>現在</th><th>未來</th></tr></thead><tbody>
+<tr><td>超系統</td><td>交通擁堵，空氣污染，依賴石油。</td><td>仍存在的交通擁塞問題，空氣污染，雖然有一些城市開始規劃更友善的交通方式。</td><td>如何適應更多自動駕駛汽車的出現，智慧城市的實施和維護，電動車的充電基礎設施建設與管理。</td></tr>
+<tr><td>系統</td><td>內燃引擎效率低，維護複雜，對環境影響大。</td><td>混合動力汽車仍需要石油，電子系統增加了複雜性和維護成本。</td><td>電動汽車的續航問題，電池的生產與回收對環境的影響，全自動駕駛的安全性。</td></tr>
+<tr><td>子系統</td><td>人工駕駛的安全問題，內燃引擎和刹車系統的維護需求。</td><td>自動駕駛輔助系統仍然有限，不完全可靠。混合動力引擎還是需要石油。</td><td>完全自動駕駛的法律和道德問題，電動馬達的效率和壽命，電池儲能系統的成本和效率。</td></tr>
+</tbody></table>
+</div>
+<p>這個分析表明，儘管汽車系統已經有了很大的進步，但仍然存在許多問題和挑戰。這些問題包括技術問題（例如，電池效率和壽命），環境問題（例如，空氣污染和電池回收），以及社會和法律問題（例如，自動駕駛的法規和道德問題）。解決這些問題將需要跨學科的努力，包括技術創新、政策制定和社會接受度的提高。</p>
+</div>
+</div>
+<hr />
+<p>再進一步要求它分析矛盾。</p>
+<div id="admonition-prompt-04" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 04</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-prompt-04"></a></p>
+</div>
+<div>
+<pre><code>進一步分析上述表格中每個格子的矛盾。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>以下是對於每個九宮格的進一步矛盾分析：</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>過去</th><th>現在</th><th>未來</th></tr></thead><tbody>
+<tr><td>超系統</td><td>交通需求增加，但交通擁塞和環境污染也隨之增加。</td><td>城市需要更好的交通流動性，但也需要減少環境影響和能源消耗。</td><td>智慧城市需要高度連接性，但也需要確保數據安全和隱私保護。</td></tr>
+<tr><td>系統</td><td>汽車需要強大的動力和續航能力，但內燃引擎造成嚴重的空氣污染。</td><td>混合動力汽車需要同時滿足內燃引擎的動力和電動機的環保，但兩者的需求有衝突。</td><td>電動汽車需要大容量的電池以確保續航，但大電池增加了重量和成本，也有難以回收的問題。</td></tr>
+<tr><td>子系統</td><td>內燃引擎需要高效的燃燒來提供動力，但這會產生廢氣和熱能，導致環境污染和能源浪費。</td><td>自動駕駛輔助系統需要提高駕駛安全，但過多的警告和控制可能干擾人類駕駛，造成新的安全問題。</td><td>電池需要高密度的儲能以提供足夠的續航，但高能量密度可能帶來安全風險（例如，過熱和火災）。</td></tr>
+</tbody></table>
+</div>
+<p>這些矛盾都需要通過技術創新、政策調整和社會改變來解決。TRIZ的理論可以提供一些解決這些矛盾的方法，例如，尋找可以在不同條件下工作的解決方案（例如，城市和高速公路上的不同駕駛模式），或者使用一些未被充分利用的資源（例如，利用汽車的廢熱來提高能源效率）。</p>
+</div>
+</div>
+<hr />
+<p>請chatGPT發想創新機會。</p>
+<div id="admonition-prompt-05" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 05</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-prompt-05"></a></p>
+</div>
+<div>
+<pre><code>發現上述表格中每個格子的創新機會
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch01.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>以下是對於每個九宮格的進一步創新機會分析：</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>過去</th><th>現在</th><th>未來</th></tr></thead><tbody>
+<tr><td>超系統</td><td>優化交通控制和規劃以緩解擁塞，並降低空氣污染。</td><td>發展和實施更環保的交通策略，如公共交通和共享汽車服務。</td><td>構建更多充電基礎設施以支援電動車，發展更高效的交通管理系統以適應自動駕駛。</td></tr>
+<tr><td>系統</td><td>研發更環保、效率更高的內燃引擎。</td><td>進一步優化混合動力系統，提升電子控制系統的效能。</td><td>推動電動汽車技術的進步，例如提高電池效率和壽命，提高充電速度。</td></tr>
+<tr><td>子系統</td><td>改善引擎和刹車系統的設計以提高效率和減少維護需求。</td><td>進一步發展自動駕駛輔助技術，提高安全性。</td><td>研發更高效和安全的電池技術，進一步提高自動駕駛的可靠性。</td></tr>
+</tbody></table>
+</div>
+<p>以上都是創新的機會，可以通過技術創新、政策變革或業務模式創新來實現。例如，建立充電基礎設施不僅需要技術的發展，也需要政策的支持和適合的業務模式。同樣，提高電池效率和壽命也需要科學研究和技術創新。而自動駕駛的可靠性則可能需要通過機器學習和大數據的方法來提高。</p>
+</div>
+</div>
+<p>後續各小節的作法都相當類似，大家可以大膽的提供TRIZ的知識，強化公開的LLM，提供的知識愈豐富，它的回應也會愈出人意外的有創意
+。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="小精靈法slp"><a class="header" href="#小精靈法slp">小精靈法(SLP)</a></h1>
+<div id="admonition-prompt-06" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 06</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-prompt-06"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問，請先記住，在TRIZ中突破心智慣性的方法有一種小精靈法(Smart Little Person, SLP)。
+所謂的小精靈法就是將自己化身為小精靈，並成為系統或元件的一部份，整個系統或元件都由小精靈構成，
+依此思考問題的解決方法。如果已經記住，請回答「好的，我已經記住」。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>好的，我已經記住。小精靈法（Smart Little Person, SLP）是TRIZ中一種用於突破心智慣性的方法。透過化身為小精靈，成為系統或元件的一部份，進而從中尋找解決問題的策略。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-07" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 07</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-prompt-07"></a></p>
+</div>
+<div>
+<pre><code>請利用「小精靈法」，提出解決[問題]的創意想法  
+
+[問題] 阿帕契直升機主旋翼葉片因微粒附著而腐蝕
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>當使用「小精靈法」來思考阿帕契直升機主旋翼葉片因微粒附著而腐蝕的問題時，我們可以試著將自己想像成葉片的小精靈，去體驗並理解葉片遭受的問題與挑戰。以下是一些可能的創新想法： </p>
+<ul>
+<li><strong>自我清潔小精靈：</strong> 每個小精靈都具有能力自我清潔，當微粒附著時，它們會啟動清潔程序，將微粒清除。這可以想像成利用某種智能化材料或塗層，能夠自行識別並排除微粒。 </li>
+<li><strong>保護盾小精靈：</strong> 小精靈們可以製造一個保護盾，阻擋微粒的附著。實際上，這可能意味著在旋翼葉片表面添加一層防止微粒附著的特殊塗層或材質。 </li>
+<li><strong>警報小精靈：</strong> 當微粒附著到足夠的程度可能引起腐蝕時，小精靈們會發出警報。這可以被視為創建一種早期檢測系統，以監控並報告可能的腐蝕情況。 </li>
+<li><strong>修復小精靈：</strong> 一旦腐蝕開始，小精靈們就會立刻進行修復，阻止腐蝕進一步發展。這可能意味著開發一種能夠自我修復的材料或系統，用於阿帕契直升機的旋翼葉片。 </li>
+</ul>
+<p>請注意，這些創新想法並非立即可實施的解決方案，而是為了激發更深入的創新思考和可能的研發方向。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-08" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 08</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-prompt-08"></a></p>
+</div>
+<div>
+<pre><code>請利用「小精靈法」，提出解決[問題]的創意想法  
+
+[問題] 水雷繫纜因掃雷艦而觸發
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch02.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>使用「小精靈法」思考水雷繫纜因掃雷艦而觸發的問題，我們可以把自己想像成繫纜的一部分，以深入理解繫纜與水雷之間的相互作用。以下是一些可能的創新解決方法： </p>
+<ul>
+<li><strong>隱形小精靈：</strong> 小精靈可以使自己對掃雷艦不可見或不可檢測。在實際情況中，這可能意味著研發一種新的繫纜材料，該材料可以抵抗掃雷艦的探測裝置。 </li>
+<li><strong>移動小精靈：</strong> 當小精靈感知到掃雷艦接近時，它可以選擇自行移動，避免與掃雷艦接觸。這可能意味著研究並開發一種可以主動避開掃雷艦的智能繫纜系統。 </li>
+<li><strong>偽裝小精靈：</strong> 小精靈可以偽裝自己，讓掃雷艦無法識別它是水雷繫纜。在實際情況中，這可能涉及到使用某種技術讓繫纜看起來像海底的自然物體。 </li>
+<li><strong>預警小精靈：</strong> 小精靈可以在感知到掃雷艦接近時，發出預警信號。這可能意味著將繫纜與一種能夠提前偵測掃雷艦並發出警報的傳感器系統相結合。 </li>
+<li><strong>解除小精靈：</strong> 如果小精靈無法阻止掃雷艦的接近，它可以選擇在掃雷艦碰觸繫纜前自行解除水雷。這可能需要研發一種能夠在緊急情況下遠程解除水雷的系統。 </li>
+</ul>
+<p>請注意，這些想法並不是現成的解決方案，而是激發創新思考的起點，進一步的研究和開發工作可能需要針對這些想法的可行性進行評估。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="stc"><a class="header" href="#stc">STC</a></h1>
+<div id="admonition-prompt-09" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 09</p>
+<p><a class="admonition-anchor-link" href="ch03.html#admonition-prompt-09"></a></p>
+</div>
+<div>
+<pre><code>請記住，另一種突破心智慣性的方法是STC法, 分別是Size, Time, Cost, 
+也就是分別發想Size, Time, Cost變成無限大或無限小的情況，
+以此來突破心智慣性，達到跳脫框架思考(Think out of the box)。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch03.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>好的，我已經記住。STC法，即Size（大小）、Time（時間）、Cost（成本），是另一種用於突破心智慣性的方法。透過想像Size、Time、Cost變成無限大或無限小的情況，我們可以跳脫既有的思考框架，以創新的角度來看待問題並尋找解決方案。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-10" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 10</p>
+<p><a class="admonition-anchor-link" href="ch03.html#admonition-prompt-10"></a></p>
+</div>
+<div>
+<pre><code>使用STC法，發想創新的 [系統]或[元件] 
+
+[系統] 餐廳
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch03.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>使用STC法思考，我們可以嘗試透過變化餐廳的大小(Size)、時間(Time)、成本(Cost)來創新。以下是一些可能的想法： </p>
+<ol>
+<li>Size（大小）： 
+<ul>
+<li>無限大：設想一個規模極大的餐廳，顧客可以在各種獨特的主題環境中享用美食，比如森林、海灘、中世紀城堡等。這種體驗導向的餐飲概念可以提供顧客獨一無二的餐飲體驗。 </li>
+<li>無限小：設想一種小型化、個性化的餐廳模式，例如專為一桌客人提供服務的餐廳，或者開發便攜式的流動餐廳，能夠根據需求移動到顧客指定的地點。 </li>
+</ul>
+</li>
+<li>Time（時間）： 
+<ul>
+<li>無限長：創建一種24小時全天候運營的餐廳，無論何時顧客都能享用到美食。或者設想一種無限期的餐飲體驗，例如會員制度，付費後可在一段時間內無限次享用餐點。 </li>
+<li>無限短：開發一種即時制作、即時服務的快速餐飲模式，使顧客可以在極短的時間內享用到新鮮美食。 </li>
+</ul>
+</li>
+<li>Cost（成本）： 
+<ul>
+<li>無限高：開設一家高端餐廳，提供頂級食材和獨特的烹飪技巧，對顧客提供極致的餐飲體驗。 </li>
+<li>無限低：創建一種低成本但高效的餐廳模式，例如自助式餐廳，或利用食物科技，如3D打印食品等技術降低成本。</li>
+</ul>
+</li>
+</ol>
+<p>以上只是一些基本的創新想法，實際的創新過程可能需要根據具體的市場需求和餐廳的業務策略來調整和優化。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="最終理想解"><a class="header" href="#最終理想解">最終理想解</a></h1>
+<div id="admonition-prompt-11" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 11</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-prompt-11"></a></p>
+</div>
+<div>
+<pre><code>身為TRIZ專家顧問, 要知道系統演進到最後稱為最終理想解(Ideal Final Result, IFR), 
+理想的系統通常是功能最大化, 但資源消耗最少。 
+具體來說，IFR可能包括以下方面的理想： 
+功能無限大：系統能夠完全、自動地完成其任務。 
+系統無物質：理想狀態下的系統沒有物理形狀，不需要物質來建造或維護。 
+消耗無能源：理想狀態下的系統不需要消耗任何能源。 
+成本無價格：理想狀態下的系統不需要任何費用來建造或運營。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>對的，&quot;理想最終結果&quot;（Ideal Final Result，IFR）是TRIZ（發明問題解決理論）中的一個重要概念。它描述了一種理想狀態，即系統在未來發展中可能達到的最佳狀態。這種狀態不僅僅是一種預測，而是一種創新的指導思想，鼓勵我們儘可能地實現這種理想狀態。 
+IFR的基本原則是，系統的功能要最大化，同時資源的消耗要最小化。這意味著，我們應該追求使系統達到所需的全部功能，而不產生任何負面影響，並且在整個過程中消耗的資源要最少。 
+明顯的是，這些理想在現實世界中可能很難完全實現。然而，IFR的目的並不是要創建一個完全實現的系統，而是提供一個指導方向，幫助我們瞭解如何改進現有的系統，使其更接近這個理想狀態。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-12" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 12</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-prompt-12"></a></p>
+</div>
+<div>
+<pre><code>提出[系統]或[元件]的理想最終結果  
+
+[系統] 洗衣機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>洗衣機的理想最終結果（IFR）可以從多個方面來描述，主要體現在功能最大化和資源消耗最少化。以下是幾個可能的理想狀態： </p>
+<ul>
+<li><strong>自動洗衣：</strong> 在理想狀態下，洗衣機能夠完全自動地進行洗衣流程。用戶只需將脏衣物放入，洗衣機就能自動判斷衣物的材質、顏色和污垢程度，選擇最適合的洗衣模式和洗衣液量。洗衣結束後，洗衣機會自動將衣物乾燥和熨平，以便用戶直接穿著。 </li>
+<li><strong>零污染和零能源消耗：</strong> 理想狀態下的洗衣機不會產生任何環境污染，所有的洗衣液都是環保的，而且可以完全被生物分解。此外，洗衣機不需要使用外部能源，它可以利用衣物自身的污垢（例如油脂）作為能源來驅動洗衣過程。 </li>
+<li><strong>無物質：</strong> 理想的洗衣機不再是一個固定的、需要佔用空間的物理裝置。它可能是一種先進的科技，例如利用微生物或納米機器人來清潔衣物，甚至是一種直接在衣物上噴灑的液體或霧狀物質，能夠立即清除污垢。 </li>
+<li><strong>零成本：</strong> 理想狀態下的洗衣機不需要任何成本。由於它不需要能源，並且可以無限期地重複使用，所以用戶不需要支付任何費用。 </li>
+</ul>
+<p>以上都是洗衣機的理想最終結果。雖然這些理想在現實中可能很難完全實現，但是它們可以作為我們改進洗衣機設計的指導方向。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-13" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 13</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-prompt-13"></a></p>
+</div>
+<div>
+<pre><code>提出[系統]或[元件]的理想最終結果  
+
+[系統] 割草機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>割草機的理想最終結果（IFR）可以從多個方面來描述，主要體現在功能最大化和資源消耗最少化。以下是幾個可能的理想狀態： </p>
+<ul>
+<li><strong>完全自動化：</strong> 在理想狀態下，割草機能夠自動識別需要割草的區域、草的種類和高度，並能自動選擇最適當的割草方式。它可以在任何時間自動開始和結束工作，並在割草完成後自動返回充電站。此外，它可以自我學習，通過分析過去的割草紀錄來不斷提高其效率和效果。 </li>
+<li><strong>零能源消耗和零污染：</strong> 理想狀態下的割草機能夠利用太陽能或其他可再生能源來驅動，無需消耗化石燃料。同時，它不會產生任何對環境有害的排放，也不會產生噪音污染。 </li>
+<li><strong>具有創新功能：</strong> 除了割草，理想的割草機也可以對草地進行其他照護，例如自動施肥、除草和澆水。它也可以回收割下的草，並將其轉化為有價值的資源，如肥料或能源。 </li>
+<li><strong>長壽和無需維護：</strong> 理想狀態下的割草機具有很高的耐用性，不易損壞或磨損，並且在其整個使用壽命中都不需要進行維護或更換零件。 </li>
+<li><strong>低成本：</strong> 理想的割草機在購買和運行過程中的成本都非常低。因為它使用的是可再生能源，並且幾乎不需要進行維護，所以用戶不需要為其支付額外的運行費用。 </li>
+</ul>
+<p>以上都是割草機的理想最終結果。雖然這些理想在現實中可能很難完全實現，但是它們可以作為我們改進割草機設計的指導方向。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-14" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 14</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-prompt-14"></a></p>
+</div>
+<div>
+<pre><code>跳脫[系統]或[元件]的框架, 提出[系統]或[元件]的理想最終結果  
+
+[系統] 割草機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>理想最終結果(IFR)的提出並不一定要侷限在現有的系統或元件框架內。對於割草機這個系統，我們可以跳脫現有框架，從全新的角度思考其理想最終結果： </p>
+<ul>
+<li><strong>自我維護的草地：</strong> 理想的狀態可能是我們不再需要割草機，因為草地自己就能保持適當的高度。這可能通過生物工程來達成，例如研發一種新型的草，這種草在達到一定的高度後就會停止生長，或者能自我修剪。 </li>
+<li><strong>無需人工參與的草地維護：</strong> 不僅僅是割草，理想的狀態可能是所有的草地維護工作都可以自動完成，包括施肥、灌溉和控制害蟲。這可能需要一種集成了各種功能的「智能草地系統」，這個系統能自動感知和調節草地的狀態。 </li>
+<li><strong>對環境有益的草地：</strong> 在理想的狀態下，草地不僅美觀，還對環境有益。例如，草地能吸收並儲存大量的二氧化碳，從而有助於減少溫室氣體排放。另外，草地也可能有其他有益的功能，比如提供野生動物的棲息地，或者生產可再生能源。 </li>
+</ul>
+<p>以上都是跳脫現有割草機框架的理想最終結果。實現這些理想可能需要跨領域的合作，包括生物工程、機器學習、環境科學等多種專業領域。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-15" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 15</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-prompt-15"></a></p>
+</div>
+<div>
+<pre><code>跳脫[系統]或[元件]的框架, 提出[系統]或[元件]的理想最終結果  
+
+[系統] 冰箱
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch04.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>跳脫現有的冰箱框架，我們可以想像以下的理想最終結果（IFR）： </p>
+<ul>
+<li><strong>無需儲存：</strong> 最理想的情況可能是我們根本不需要冰箱儲存食物。這可以通過各種方式實現，比如提高食物的保存技術，讓食物能在常溫下長時間保鮮；或者改變我們的飲食習慣和供應鏈，讓我們可以隨時獲取新鮮的食物，無需提前購買和儲存。 </li>
+<li><strong>智能供應：</strong> 另一種理想狀態可能是一種能根據我們的需求和營養需求自動提供食物的系統。這個系統不僅可以保存食物，還能自動計劃和準備餐點，甚至能生產食物。 </li>
+<li><strong>環境友好：</strong> 理想的冰箱系統不會對環境造成負面影響。它能利用可再生能源工作，不產生噪音，也不釋放對臭氧層有害的化學物質。此外，這種理想的系統在其生命周期結束時，能夠完全回收並無害處理，不產生廢物。 </li>
+</ul>
+<p>以上都是跳脫現有冰箱框架的理想最終結果。當然，這些理想在現實中可能難以實現，但它們可以提供一個指導我們改進冰箱設計的方向。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="40發明原理"><a class="header" href="#40發明原理">40發明原理</a></h1>
+<div id="admonition-prompt-16" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 16</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-prompt-16"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問, 請先記住TRIZ的發明原理共有40個，40發明原理整體名稱列表如下所示:
+1.分割。2.分離/取出/萃取。3.改變局部特性。4.非對稱性。5.合併/整合。 6.多用性/多功能。
+7.套疊/巢狀結構。8.重量補償。9.事先的反作用。10.預先行動。 11.預先補償/緩衝。
+12.等位能原理。13.另一方向/反向操作。14.球狀、曲線。15.動態化原理。 16.不足或過多的動作。
+17.移至新空間。18.機械振動。19.週期行動。20.連續的有效動作 21.快速行動。22.轉有害為有利。
+23.回饋。24.中介物質。25.自助/自我服務 。 26.使用複製品或模型。27.廉價與短期(拋棄式)。
+28.替換系統運作原理/使用其他感知。29.使用氣體或液體。30.使用彈性殼和薄膜。31.孔隙材料。
+32.改變顏色。33.同質性。34.消失與復原。35.改變物質特性。36.相轉變。37.熱膨脹。
+38.加速氧化。 39.惰性環境。40.複合材料
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>謝謝您提供TRIZ的40發明原理的清單。這確實是TRIZ方法的核心部分，對於解決工程和設計中的矛盾問題非常有用。如果您有關於這些原理或如何將它們應用於特定情境的問題，請隨時提問。我會很高興協助您！</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-17" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 17</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-prompt-17"></a></p>
+</div>
+<div>
+<pre><code>應用第[X]項發明原理於[系統]或[元件], 產生[N]個新的創意想法  
+[X] 10  
+[元件] 手機天線 
+[N] 3
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>第10項TRIZ發明原理是 &quot;預先行動&quot;。這原則建議我們提前做好準備，以便在需要的時候快速地或無縫地進行操作。以下是根據該原理，關於手機天線的三種創新想法： </p>
+<ul>
+<li><strong>預設最優信號路徑：</strong> 手機的天線可以根據預先收集的數據，自動選擇最佳的信號路徑。例如，當用戶在家裡或在辦公室時，天線可以自動切換到對應的Wi-Fi信號；當用戶在移動時，天線則自動切換到4G或5G信號。 </li>
+<li><strong>預測式天線調整：</strong> 手機的天線可以根據用戶的行為模式和位置資訊，提前調整自己的形態或方位以獲取最佳的信號接收。例如，如果手機能預測到用戶即將進入一個信號弱的地區，天線可以提前調整到一種更適合接收弱信號的模式。 </li>
+<li><strong>預先充能：</strong> 為了應對可能的電力短缺或電池耗盡，手機的天線可以設計成能夠儲存能量的模式。例如，天線可以利用日間的太陽能充電，或者在手機正在充電時，一同為天線儲存一部分能量，以便在需要的時候使用。 </li>
+</ul>
+<p>以上僅為基於TRIZ第10項原理—預先行動，對手機天線可能的創新想法，具體的設計與實現可能需要更多的研發與實驗。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-18" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 18</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-prompt-18"></a></p>
+</div>
+<div>
+<pre><code>應用第[X]項發明原理於 [元件] , 產生[N]項新的創意想法 
+[X] 29 
+[元件] 筆記型電腦的觸控板 
+[N] 3
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>第29項TRIZ發明原理是 &quot;使用氣體或液體&quot;。以下是根據該原理，關於筆記型電腦觸控板的三種創新想法： </p>
+<ul>
+<li><strong>液態觸控板：</strong> 開發一種利用液體作為感應介質的觸控板，用戶對這種液態表面的壓力或移動會產生相對應的電壓變化或阻抗變化，從而被感測系統檢測並轉換成相應的指令。這種液態觸控板有可能提供更直觀、靈敏的觸控體驗。 </li>
+<li><strong>氣壓感應觸控板：</strong> 開發一種利用氣壓變化來感應手勢的觸控板。當使用者的手指接近或觸摸到觸控板時，會在觸控板表面產生微小的氣壓變化，這些變化可以被專門的感測器檢測出來，從而判斷出使用者的手勢和動作。這種氣壓感應觸控板可能可以實現更多的手勢操作，提供更豐富的互動方式。 </li>
+<li><strong>液晶變色觸控板：</strong> 結合液晶顯示技術與觸控技術，讓觸控板表面可以根據使用者的操作顯示不同的顏色或圖案。例如，當使用者滑動觸控板時，觸控板可以產生相應的顏色變化或顯示相關的圖形，提供更直觀的視覺反饋。 </li>
+</ul>
+<p>以上僅為基於TRIZ第29項原理—使用氣體或液體，對筆記型電腦觸控板可能的創新想法，具體的設計與實現可能需要更多的研發與實驗。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-19" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 19</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-prompt-19"></a></p>
+</div>
+<div>
+<pre><code>應用第[X]項發明原理於 [元件] , 產生[N]項新的創意想法 
+[X] 4 
+[元件] 伺服器散熱裝置 
+[N] 3
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>使用TRIZ的第4項原理-非對稱性，我們可以思考一些新的創意方法來改進伺服器的散熱裝置： </p>
+<ul>
+<li><strong>非對稱散熱片設計：</strong> 傳統上，散熱片通常具有對稱的形狀和結構。然而，我們可以設計非對稱的散熱片，使得熱量能更有效地從高溫區域傳導到低溫區域。這種非對稱的散熱片可能需要根據伺服器內部的熱分佈來客製化設計。 </li>
+<li><strong>動態調節的風扇：</strong> 風扇一般在兩側的氣流是相同的，但我們可以設計一種可以根據實際需要動態調節轉速的風扇，使得風扇一側的氣流強度大於另一側。這種設計可以更有效地將高溫區域的熱氣快速排出。 </li>
+<li><strong>非對稱的散熱材料應用：</strong> 我們可以在伺服器的不同部分使用不同的散熱材料，例如在溫度較高的部分使用導熱係數更高的材料，而在溫度較低的部分使用導熱係數較低的材料。這種非對稱的材料應用方式可以實現更有效的熱能管理。 </li>
+</ul>
+<p>以上的創意想法需要進一步的分析和驗證，以確定其在實際應用中的效果和可行性。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-20" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 20</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-prompt-20"></a></p>
+</div>
+<div>
+<pre><code>應用第[X]項發明原理於 [元件] , 產生[N]項新的創意想法  
+[X] 22  
+[元件] 伺服器散熱裝置  
+[N] 3
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch05.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>使用TRIZ的第22項原理- &quot;轉有害為有利&quot;，我們可以思考一些新的創意方法來改進伺服器的散熱裝置： </p>
+<ul>
+<li><strong>熱能回收和再利用：</strong> 在伺服器運行過程中，會產生大量的熱能。這些熱能可以透過熱交換器被回收，然後轉換成其他形式的能源，比如電能或機械能。這樣，我們就可以將原本被視為有害的熱能轉變為有利的資源。 </li>
+<li><strong>利用熱能進行其他運作：</strong> 比如可以設計將伺服器排出的熱能用於供暖，或者用於烘乾環境中的濕氣，這樣不僅達到了散熱的目的，也利用了原本被視為有害的熱源。 </li>
+<li><strong>設計熱感應風扇：</strong> 伺服器運行時產生的熱能，可以被用來觸發風扇的自動啟動和關閉。當熱度達到一定程度時，風扇自動開啟以冷卻系統，而當溫度下降到一定程度時，風扇自動關閉以節省能源。這種設計允許我們將原本有害的過熱現象轉化為有利的能源節約手段。 </li>
+</ul>
+<p>以上的創意想法需要進一步的分析和驗證，以確定其在實際應用中的效果和可行性。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="資源"><a class="header" href="#資源">資源</a></h1>
+<div id="admonition-prompt-21" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 21</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-prompt-21"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問，必須了解TRIZ理論所稱的資源有六大類：
+時間資源、空間資源、物質資源、能場資源、功能資源、資訊資源等。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>這是對的，根據TRIZ理論，資源可以大致分為以下六大類： </p>
+<ul>
+<li><strong>時間資源：</strong> 這涉及到生產和操作的時間。例如，生產時間可以縮短，產品生命週期可以延長，或者系統的操作時間可以優化。 </li>
+<li><strong>空間資源：</strong> 這涉及到生產和操作的空間。例如，可以通過設計來最小化產品的尺寸，或者可以優化工廠佈局以改進生產效率。 </li>
+<li><strong>物質資源：</strong> 這涉及到用於生產和操作的物料。例如，可以尋找替代的原料來降低成本，或者可以改進材料的使用效率以降低浪費。 </li>
+<li><strong>能場資源：</strong> 這涉及到生產和操作的能源。例如，可以尋找替代的能源來降低能源成本，或者可以改進能源的使用效率以降低能源消耗。 </li>
+<li><strong>功能資源：</strong> 這涉及到產品或系統的功能。例如，可以增加新的功能以提高產品的價值，或者可以改進現有功能的效率以提高效能。 </li>
+<li><strong>資訊資源：</strong> 這涉及到生產和操作的資訊。例如，可以利用資訊科技來改進生產管理，或者可以利用資訊科技來改進產品的功能。 </li>
+</ul>
+<p>理解這些資源的類型有助於我們更好地應用TRIZ理論來解決實際問題。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-22" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 22</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-prompt-22"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源 ? 
+[情境] 鐵達尼號
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>在&quot;鐵達尼號&quot;的情境中，我們可以根據TRIZ理論的六大資源類型來列出以下的資源： </p>
+<ul>
+<li><strong>時間資源：</strong> 航程的時間、工作人員的班次時間、乘客的閒暇時間。 </li>
+<li><strong>空間資源：</strong> 船艙的空間、甲板的空間、儲藏室的空間，以及船舶內的其他設施空間。 </li>
+<li><strong>物質資源：</strong> 船體及船上設施的材料、備用零件、食物、飲料、衣物以及其他物資。 </li>
+<li><strong>能場資源：</strong> 船艦的推進能量（如煤或燃料）、電力（用於照明、通訊、廚房設備等）、人力（乘客和工作人員的勞動力）。 </li>
+<li><strong>功能資源：</strong> 船上的設施及服務，如餐廳、健身房、圖書館、醫護設施等；船隻本身的運輸功能以及求救設備（如救生艇）的功能。 </li>
+<li><strong>資訊資源：</strong> 船艦的導航信息、氣象信息、航程計劃、乘客和工作人員的資訊、急難求救的通訊設施等。 </li>
+</ul>
+<p>以上的例子只是一部分，實際的資源可能還包括更多。不過這些都依賴於具體的情境和需求。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-23" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 23</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-prompt-23"></a></p>
+</div>
+<div>
+<pre><code>列出[系統]或[元件]的六大資源  
+
+[系統] 伺服器
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>一般而言，伺服器系統中包含了六大類型的資源： </p>
+<ul>
+<li><strong>時間資源：</strong> 這包括伺服器的運行時間、維護時間、資料傳輸時間以及資料處理時間等。 </li>
+<li><strong>空間資源：</strong> 伺服器需要存放的物理空間，包括機架空間、伺服器室的面積和高度、以及數據存儲空間等。 </li>
+<li><strong>物質資源：</strong> 這包括伺服器硬體本身（如處理器、內存、硬盤驅動器等）、冷卻系統、電源裝置、連接線路和數據中心的設施等。 </li>
+<li><strong>能場資源：</strong> 伺服器需要電力來運行，而冷卻系統則需要消耗能量以防止過熱。同時，伺服器運行時產生的廢熱也可以被視為一種潛在的能源。 </li>
+<li><strong>功能資源：</strong> 伺服器可以提供各種功能，例如資料存儲、資料處理、網路服務、安全管理等。 </li>
+<li><strong>資訊資源：</strong> 伺服器存儲和處理的數據本身就是一種重要的資源，此外，伺服器運行的日誌、狀態報告等信息也是有價值的資訊資源。 </li>
+</ul>
+<p>以上就是伺服器系統中的六大類型資源。在實際的運營和管理中，我們應該充分利用這些資源，以提升伺服器的性能和效率，並降低成本和風險。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-24" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 24</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-prompt-24"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源  
+
+[情境] 電影: 絕地救援的火星太空站(The Martian)
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>《絕地救援》（The Martian）是一部描述太空人馬克·瓦特尼在火星上遭遇不幸被遺棄，並必須使用各種科學方法和資源來生存，直到他被營救的電影。在這樣的情境下，馬克所能利用的資源包括： </p>
+<ul>
+<li><strong>時間資源：</strong> 馬克知道他需要在火星上存活一定的時間，直到下一次的補給飛船抵達火星。這段時間就是他必須有效利用的資源。 </li>
+<li><strong>空間資源：</strong> 他所在的火星基地“神舟”生活模組為他提供了有限的生活和實驗空間。 </li>
+<li><strong>物質資源：</strong> 
+<ul>
+<li>留下的食物供應。 </li>
+<li>破損的通訊設備。 </li>
+<li>之前的火星任務留下的各種工具和材料，例如火星車。 </li>
+</ul>
+</li>
+<li><strong>能場資源：</strong> 
+<ul>
+<li>基地內的電力供應系統。 </li>
+<li>太陽能板，可以為火星車和基地提供能量。 </li>
+</ul>
+</li>
+<li><strong>功能資源：</strong> 
+<ul>
+<li>他的科學和工程知識，讓他可以解決各種問題，例如如何生產水或種植食物。 </li>
+<li>“神舟”生活模組的各種設施，例如水回收系統。 </li>
+</ul>
+</li>
+<li><strong>資訊資源：</strong> 
+<ul>
+<li>他回憶起的訓練和知識，這幫助他解決火星上的生存問題。 </li>
+<li>當他重新建立與地球的通訊時，從NASA那裡得到的資訊和指導。</li>
+</ul>
+</li>
+</ul>
+<p>這部電影深入地探討了如何在極端環境中充分利用有限的資源，並通過創造性的方法來解決看似不可能的問題。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-25" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 25</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-prompt-25"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源  
+
+[情境] 台北101大樓
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch06.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>台北101大樓是台灣的一座摩天大樓，當時曾是全球最高的建築。在這個情境下，台北101擁有的資源可以細分為以下六大類： </p>
+<ul>
+<li><strong>時間資源：</strong> 
+<ul>
+<li>101大樓作為辦公室和商場，其營業時間、辦公時間和各種活動時段都是時間資源。 </li>
+</ul>
+</li>
+<li><strong>空間資源：</strong> 
+<ul>
+<li>大樓內的辦公空間。 </li>
+<li>商場和零售店鋪。 </li>
+<li>觀景台，提供市民和遊客俯瞰台北市的景觀。 </li>
+<li>地下停車場。 </li>
+<li>會議室和活動空間。 </li>
+</ul>
+</li>
+<li><strong>物質資源：</strong> 
+<ul>
+<li>大樓內的設施，如電梯、扶手電梯、照明系統等。 </li>
+<li>裝潢和家具。 </li>
+<li>供應商和店鋪所提供的商品和服務。 </li>
+<li>防震的大型調諧質量阻尼器，可以減少大樓因地震或強風而搖晃。 </li>
+</ul>
+</li>
+<li><strong>能量資源：</strong> 
+<ul>
+<li>電力供應，為大樓的各種設施提供動力。 </li>
+<li>大樓的空調系統。 </li>
+<li>備用發電機。 </li>
+</ul>
+</li>
+<li><strong>功能資源：</strong> 
+<ul>
+<li>安全系統，包括監控、防火系統、疏散通道等。 </li>
+<li>環境控制系統，調節大樓的溫度、濕度和照明。 </li>
+<li>信息和通訊設施，如公共廣播系統、Wi-Fi 和光纖網絡。 </li>
+</ul>
+</li>
+<li><strong>資訊資源：</strong> 
+<ul>
+<li>關於大樓的資訊，例如建築結構、歷史、商店和服務指南。 </li>
+<li>人流和訪客數據，可以用來分析和調整商場策略或辦公空間管理。 </li>
+<li>建築和設計的原始資料和藍圖。 </li>
+</ul>
+</li>
+</ul>
+<p>這些建築和功能上的資源使台北101成為一個多功能、高效和持續運作的摩天大樓，可以滿足商業、觀光和其他多種需求。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="技術矛盾"><a class="header" href="#技術矛盾">技術矛盾</a></h1>
+<p>技術矛盾解決</p>
+<div id="admonition-prompt-26" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 26</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-prompt-26"></a></p>
+</div>
+<div>
+<pre><code>身為TRIZ專家顧問，請先記住TRIZ理論中的工程參數, 工程參數有六類, 如下:  
+幾何類: 3.移動件長度、4.固定件長度、5.移動件面積、6.固定件面積、7.移動件體積、 8.固定件體積、12.形狀  
+資源類: 19.移動件消耗能量、20.固定件消耗能量、22.能源浪費、23.物質浪費、24.資訊喪失、25.時間浪費、26.物料數量 
+害處類：30.物體上有害因素、31.有害側效應  
+物理類: 1.移動件重量、2.固定件重量、9.速度、10.力量、11.張力、壓力、17.溫度、18.亮度、21.動力  
+能力類:13.物體穩定性、14.強度、15.移動件耐久性、16.固定件重量、27.可靠度、32.製造性、 34.可修理性、35.適合性、39.生產性  
+操控類:28.量測精確度、29.製造精確度、33.使用方便性、36.裝置複雜性、37.控制複雜性、38.自動化程度
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>謝謝您列出TRIZ中的工程參數清單。這些參數是TRIZ解決技術矛盾的基石，經常用於矛盾矩陣中，幫助確定最適合的發明原理。
+瞭解這些工程參數對於TRIZ的應用至關重要。不同的工程參數之間可能存在技術矛盾，例如：增加物體的強度（參數14）可能會導致物體的重量增加（參數1或2）。這種情況下，TRIZ提供了特定的解決策略，即40個發明原理，來克服這些技術矛盾。
+如需進一步詳述或對某個情境進行TRIZ分析，請告訴我。我將很高興協助您。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-27" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 27</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-prompt-27"></a></p>
+</div>
+<div>
+<pre><code>TRIZ的技術矛盾是指系統中要改善的參數改善後會造成另一個參數惡化，要改善的參數稱為「改善方參數」，造成惡化的參數稱為「惡化方參數」。 
+請從[情境]的描述中找出上述39工程參數中改善方的參數及惡化方的參數  
+[情境] 公車載客量要大但操控性要好
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>從這個問題中，我們可以從這39個工程參數中辨識出&quot;改善方參數&quot;與&quot;惡化方參數&quot;。 </p>
+<ul>
+<li><strong>改善方參數：</strong> 公車載客量要大，所以相關的工程參數應該是「移動件體積」(7)。移動件體積在此可能表示公車的乘客容量，這個參數需要被改善以達到更大的載客量。 </li>
+<li><strong>惡化方參數：</strong> 公車的操控性要好，所以相關的工程參數可能是「控制複雜性」(37)。當公車載客量變大時，公車的尺寸可能變大，從而使得公車的操控更加困難，導致控制的複雜性增加。 </li>
+</ul>
+<p>請注意，這些是根據你提供的情況來推測的可能參數。在實際的工程問題解決過程中，可能還需要考慮其他的工程參數，並且對整個系統進行全面的分析和設計。</p>
+</div>
+</div>
+<hr />
+<p>這裡描述的[情境]可以從功能分析或創新情境問卷(ISQ)中得到。 </p>
+<div id="admonition-prompt-28" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 28</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-prompt-28"></a></p>
+</div>
+<div>
+<pre><code>一般而言，我們可以多找幾組這樣的技術矛盾，請再依據上述[情境]，多列出兩組技術矛盾
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>當然，我們可以找出更多可能的技術矛盾。以下是根據你提供的&quot;公車載客量要大但操控性要好&quot;的問題，另外兩組可能的技術矛盾： </p>
+<ul>
+<li><strong>改善方參數：</strong> 「物料數量」(26) - 以增加座位或者優化內部空間配置為目標，希望提高載客量。 惡化方參數：「裝置複雜性」(36) - 為了增加載客量而改變內部配置，可能會導致內部裝置變得更複雜，這可能增加維護的困難度。 </li>
+<li><strong>改善方參數：</strong> 「移動件長度」(3) - 公車的長度可能會被增加以容納更多的乘客。 惡化方參數：「量測精確度」(28) - 一輛更長的公車可能需要更精確的控制，特別是在停靠站牌或經過狹窄街道時。這可能會導致駕駛員需要更高的量測精確度來確保安全。 </li>
+</ul>
+<p>這些都是基於假設的技術矛盾，實際的解決方案可能需要進一步的工程分析和設計。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-29" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 29</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-prompt-29"></a></p>
+</div>
+<div>
+<p>矛盾矩陣請參考 https://www.triz40.com/aff_Matrix_TRIZ.php<br />
+依據上述成對的改善方參數與惡化方參數, 找出適合的發明原裡
+再依照發明原裡產生新的創意想法</p>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>根據TRIZ的矛盾矩陣（我將使用你提供的網站進行分析），我們可以找出相應的創新原理來解決技術矛盾。以下是我根據之前討論的三組技術矛盾，找出的適合的創新原理以及可能的創新想法： </p>
+<ol>
+<li>改善方參數：移動件體積，惡化方參數：控制複雜性 根據矛盾矩陣，可能的創新原理包括&quot;動態性&quot;和&quot;優先順序變更&quot;。我們可以考慮以下的創新想法： 
+<ul>
+<li><strong>進行動態的公車設計</strong> ，例如，可以考慮使用伸縮式公車，只在需要提高載客量的時候增加公車的體積。這樣，當載客需求較低時，公車可以縮小到一個容易操控的尺寸。 </li>
+<li><strong>改變操控優先順序</strong> ，例如，將部分操控任務交由自動化技術執行，以減輕駕駛員的負擔。 </li>
+</ul>
+</li>
+<li>改善方參數：物料數量，惡化方參數：裝置複雜性 根據矛盾矩陣，可能的創新原理包括&quot;優先順序變更&quot;和&quot;反饋&quot;。可能的創新想法如下： 
+<ul>
+<li><strong>優化乘客座位的配置</strong> ，例如，設計可摺疊或可轉換的座位，以靈活應對不同的載客需求，這樣既可以提高載客量，又不會過度增加裝置複雜性。 </li>
+<li><strong>在公車上安裝反饋系統</strong> ，例如，乘客流量監控系統，可以根據當前的載客量調整座位配置，以保持適當的載客量和裝置複雜性之間的平衡。 </li>
+</ul>
+</li>
+<li>改善方參數：移動件長度，惡化方參數：量測精確度 根據矛盾矩陣，可能的創新原理包括&quot;反饋&quot;和&quot;結構分割&quot;。我們可以考慮以下的創新 
+<ul>
+<li><strong>反饋：</strong> 為了處理公車長度增加與量測精確度之間的矛盾，可以考慮增加更多的反饋元件，例如安裝前後和側邊的雷達或儀器，來提供更準確的車輛位置和周圍環境信息給駕駛員。這樣可以提高駕駛員的量測精確度，使他們更容易控制更大的公車。 </li>
+<li><strong>結構分割：</strong> 另一種可能的解決方案是分割公車的結構，例如，設計一種由多個較小單元組成的公車，這些單元可以單獨或聯合運行。這樣，每個單元都比整車小，更容易控制和量測。當需要增加載客量時，可以增加運行的單元數量。這樣可以同時解決載客量和操控性的問題。 </li>
+</ul>
+</li>
+</ol>
+<p>以上只是依據TRIZ原理提出的一些可能的創新想法，實際的設計和實現可能還需要進一步的研究和試驗。</p>
+</div>
+</div>
+<hr />
+<p><strong>Prompt 30</strong> </p>
+<pre><code>TRIZ的技術矛盾是指系統中要改善的參數改善後會造成另一個參數惡化，要改善的參數稱為「改善方參數」，造成惡化的參數稱為「惡化方參數」。 請從[情境]的描述中找出三組上述39工程參數中改善方的參數及惡化方的參數 再依據上述成對的改善方參數與惡化方參數, 找出適合的發明原裡 參考矛盾矩陣 https://www.triz40.com/aff_Matrix_TRIZ.php 再依照發明原裡產生新的創意想法  
+[情境] 酒心巧克力填充速度要快但品質要好 
+</code></pre>
+<hr />
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch07.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>從「酒心巧克力填充速度要快但品質要好」這個描述中，我們可以辨識以下的技術矛盾： </p>
+<ol>
+<li><strong>改善方參數：</strong> 填充速度 (對應於工程參數的「速度」) 
+<strong>惡化方參數：</strong> 填充的均勻性 (可能對應於「均勻度」) </li>
+<li><strong>改善方參數：</strong> 填充速度 (對應於工程參數的「速度」) 
+<strong>惡化方參數：</strong> 酒的泄漏或溢出 (可能對應於「損失的穩定性和可靠性」) </li>
+<li><strong>改善方參數：</strong> 填充速度 (對應於工程參數的「速度」) 
+<strong>惡化方參數：</strong> 酒心的準確配置 (可能對應於「精確度」) </li>
+</ol>
+<p>使用您提供的矛盾矩陣，我們可以找到以下的發明原理： </p>
+<ol>
+<li>對於「速度」和「均勻度」：推薦的發明原理為：1. 分割、28. 取代機械系統、34. 棄物和助物。 </li>
+<li>對於「速度」和「損失的穩定性和可靠性」：推薦的發明原理為：3. 局部品質、18. 振動、28. 取代機械系統。 </li>
+<li>對於「速度」和「精確度」：推薦的發明原理為：1. 分割、2. 取出、10. 前行動作。 </li>
+</ol>
+<p>基於上述的發明原理，我們可以產生以下的創意想法： </p>
+<ol>
+<li>分割：使用多個小型的填充機同時工作，每個填充機只負責一部分的巧克力，從而提高速度但不犧牲均勻度。 </li>
+<li>取代機械系統：使用更加精細的注射系統，如微流體技術，來確保酒心巧克力的均勻且快速的填充。 </li>
+<li>振動：在填充過程中加入振動，這樣可以幫助酒心均勻地分佈在巧克力中，並減少空氣泡。 </li>
+<li>局部品質：設定特定的「關鍵品質區域」，在這些區域使用更精確的填充技術，而在其他不那麼關鍵的地方則可以提高速度。 </li>
+<li>前行動作：在填充前先進行預先的定位和配置，這樣可以確保當真正填充時，酒心的位置是精確的。 </li>
+</ol>
+<p>這些創意想法提供了不同的方向和可能性，具體的實施可能還需要進一步的研發和測試。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="功能分析"><a class="header" href="#功能分析">功能分析</a></h1>
+<div id="admonition-prompt-31" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 31</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-31"></a></p>
+</div>
+<div>
+<pre><code>作為一位TRIZ專家與顧問, 請運用功能分析, 分析冰箱, 請以表格列出元件, 有益的功能, 有害的功能
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>TRIZ專家進行功能分析時，會將產品或系統分解成各個元件，並分析這些元件的有益功能和有害功能。以下是對冰箱進行功能分析的表格： </p>
+<div class="table-wrapper"><table><thead><tr><th>元件</th><th>有益功能</th><th>有害功能</th></tr></thead><tbody>
+<tr><td>壓縮機</td><td>壓縮冷媒，使冷媒循環，冷卻冰箱內部</td><td>噪音，耗能，散熱導致周圍環境溫度升高</td></tr>
+<tr><td>冷凝器</td><td>釋放熱量，使冷媒冷卻並變為液態</td><td>散熱導致周圍環境溫度升高</td></tr>
+<tr><td>膨脹閥</td><td>使冷媒膨脹，冷卻蒸發器</td><td>故障可能導致冷媒無法正常循環</td></tr>
+<tr><td>蒸發器</td><td>吸收熱量，使冰箱內部保持低溫</td><td>需定期除霜，以防結霜影響效率</td></tr>
+<tr><td>隔熱層</td><td>減少冰箱內外溫度交換，保持冷藏效果</td><td>隔熱材料可能對環境造成污染</td></tr>
+<tr><td>門</td><td>保持冰箱密封，阻止熱量交換</td><td>開門時可能造成溫度波動</td></tr>
+<tr><td>門封</td><td>加強門的密封性能，防止冷氣泄漏</td><td>門封老化可能導致密封性能下降</td></tr>
+<tr><td>控制面板</td><td>調節冰箱內部溫度，控制開關及其他功能</td><td>故障可能導致冰箱失控</td></tr>
+<tr><td>照明裝置</td><td>方便用戶在昏暗環境下查看冰箱內部物品</td><td>長時間開燈可能導致浪費能源，產生熱量</td></tr>
+<tr><td>置物架</td><td>便於存放和整理食品</td><td>過多食品可能阻擋冷氣流通，影響冷卻效果</td></tr>
+</tbody></table>
+</div>
+<p>在進行功能分析後，我們可以針對有害功能進行改進，提高產品性能和使用者滿意度。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-32" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 32</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-32"></a></p>
+</div>
+<div>
+<pre><code>這些元件間是否有交互作用, 以表格列出元件一, 元件二, 交互作用
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>以下表格展示了冰箱中各元件間的交互作用： </p>
+<div class="table-wrapper"><table><thead><tr><th>元件一</th><th>元件二</th><th>交互作用</th></tr></thead><tbody>
+<tr><td>壓縮機</td><td>冷凝器</td><td>壓縮機將冷媒壓縮後送入冷凝器進行冷卻</td></tr>
+<tr><td>壓縮機</td><td>膨脹閥</td><td>壓縮機將冷媒送入膨脹閥，使冷媒在膨脹閥後膨脹冷卻</td></tr>
+<tr><td>冷凝器</td><td>膨脹閥</td><td>冷凝器冷卻後的冷媒進入膨脹閥進行膨脹</td></tr>
+<tr><td>膨脹閥</td><td>蒸發器</td><td>膨脹閥使冷媒膨脹後流入蒸發器，以便吸收熱量冷卻冰箱內部</td></tr>
+<tr><td>蒸發器</td><td>壓縮機</td><td>蒸發器將吸收熱量後的冷媒氣體送回壓縮機再次進行循環</td></tr>
+<tr><td>蒸發器</td><td>置物架</td><td>蒸發器吸收熱量使置物架上的食品冷卻</td></tr>
+<tr><td>隔熱層</td><td>冷凝器</td><td>隔熱層減少冷凝器釋放的熱量與冰箱內部的熱量交換</td></tr>
+<tr><td>隔熱層</td><td>蒸發器</td><td>隔熱層減少蒸發器吸收的熱量與外部環境的熱量交換</td></tr>
+<tr><td>門</td><td>門封</td><td>門與門封共同密封冰箱，防止冷氣泄漏</td></tr>
+<tr><td>控制面板</td><td>壓縮機</td><td>控制面板根據設定的溫度控制壓縮機的運行</td></tr>
+<tr><td>控制面板</td><td>照明裝置</td><td>控制面板控制照明裝置的開關</td></tr>
+<tr><td>置物架</td><td>照明裝置</td><td>照明裝置為置物架上的食品提供照明，方便用戶查看和取用</td></tr>
+</tbody></table>
+</div>
+<p>分析各元件間的交互作用有助於了解產品的工作原理</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-33" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 33</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-33"></a></p>
+</div>
+<div>
+<pre><code>分析上述交互作用的矛盾點
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>根據上述冰箱元件間的交互作用，我們可以找到以下矛盾點： </p>
+<ul>
+<li><strong>壓縮機與冷凝器：</strong> 壓縮機需要提供足夠的能量來壓縮冷媒，但這會導致散熱增加，使得冷凝器需要釋放更多熱量。此矛盾點需要在能效和散熱之間找到平衡。 </li>
+<li><strong>膨脹閥與蒸發器：</strong> 膨脹閥需要為蒸發器提供足夠的冷媒以保持低溫，但過多的冷媒流量可能會導致結霜。此矛盾點需要在冷卻效果和結霜問題之間找到平衡。 </li>
+<li><strong>蒸發器與置物架：</strong> 蒸發器需要保持冰箱內部的低溫，但過多的食品可能會阻擋冷氣流通，降低冷卻效果。此矛盾點需要在冷卻效果和儲存空間之間找到平衡。 </li>
+<li><strong>隔熱層與環境：</strong> 隔熱層需要有效地阻止冰箱內外溫度交換，但隔熱材料可能對環境造成污染。此矛盾點需要在隔熱性能和環保之間找到平衡。 </li>
+<li><strong>門封與使用壽命：</strong> 門封需要具有良好的密封性能，但隨著時間的推移，門封可能會老化，導致密封性能下降。此矛盾點需要在密封性能和使用壽命之間找到平衡。 </li>
+<li><strong>控制面板與耗能：</strong> 控制面板需要提供準確的溫度控制，但同時可能會增加能耗。此矛盾點需要在溫度控制和能耗之間找到平衡。 </li>
+<li><strong>照明裝置與能耗：</strong> 照明裝置需要為冰箱內部提供足夠的照明，但長時間開燈可能導致浪費能源和產生熱量。此矛盾點需要在照明效果和能耗之間找到平衡。 </li>
+</ul>
+<p>通過分析這些矛盾點，我們可以針對具體問題進行優化，改善冰箱的性能</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-34" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 34</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-34"></a></p>
+</div>
+<div>
+<pre><code>利用TRIZ 40發明原理解決上述的矛盾點, 提出創新構想
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>根據TRIZ的40個發明原理，我們可以針對上述冰箱矛盾點提出以下創新構想： </p>
+<ol>
+<li>壓縮機與冷凝器： 
+<ul>
+<li>原理35 - 參數變化：選擇更高效的壓縮機和冷凝器，以提高能效和降低散熱。 </li>
+<li>原理28 - 代替機械系統：採用非機械冷卻技術，如熱電冷卻，以減少散熱和能耗。 </li>
+</ul>
+</li>
+<li>膨脹閥與蒸發器： 
+<ul>
+<li>原理3 - 局部品質：設計具有不同孔徑的膨脹閥，以便根據需求調節冷媒流量。 </li>
+<li>原理15 - 功能動態：使用可調節的膨脹閥，根據結霜情況自動調整冷媒流量。 </li>
+</ul>
+</li>
+<li>蒸發器與置物架： 
+<ul>
+<li>原理7 - 嵌套：設計可調節高度的置物架，以便確保冷氣流通。 </li>
+<li>原理19 - 週期性動作：定期開啟風扇，增加冰箱內部的氣流，提高冷卻效果。 </li>
+</ul>
+</li>
+<li>隔熱層與環境： 
+<ul>
+<li>原理26 - 拷貝：使用具有良好隔熱性能且對環境友好的材料，如生物基聚氨酯。 </li>
+<li>原理30 - 彈性薄膜與薄片：選擇具有更高熱阻的多層隔熱材料，以提高隔熱性能。 </li>
+</ul>
+</li>
+<li>門封與使用壽命： 
+<ul>
+<li>原理16 - 部分或過量：使用雙層門封以提高密封性能。 </li>
+<li>原理27 - 廉價的短暫替代品：選擇易更換的門封設計，方便用戶定期更換。 </li>
+</ul>
+</li>
+<li>控制面板與耗能： 
+<ul>
+<li>原理2 - 取出：採用低功耗的控制面板設計。 </li>
+<li>原理10 - 預先行動：使用智能感測器預測溫度波動，提前調節控制面板的設置。 </li>
+</ul>
+</li>
+<li>照明裝置與能耗： 
+<ul>
+<li>原理23 - 反作用：選擇高效能的LED燈作為照明裝置，降低能耗。</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<hr />
+<p>一般功能分析需要繪製圖形，雖然chatGPT無法直接繪圖，但可以透過chatGPT的協助產生Makdown語法來繪製相關的圖形，以下Prompt即示範如何經由chatGPT產生功能分析圖形。</p>
+<div id="admonition-prompt-35" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 35</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-35"></a></p>
+</div>
+<div>
+<pre><code>使用markdown diagram 繪製冰箱的方塊圖, 元件繪成節點，元件與元件的關係繪製成有方向的連接線, 節點名稱以中文表示, 關係如果是有益的, 須標示有益, 關係如果是有害的, 須標示有害
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>由於 Markdown 不直接支持繪圖，我們可以使用類似於 Ascii Flow 或 Mermaid 這類的工具來繪製冰箱方塊圖。在這裡，我將提供使用 Mermaid 語法的示例。您需要在支持 Mermaid 的 Markdown 編輯器中貼入以下代碼，如 Typora 或 StackEdit：</p>
+<pre><code>mermaid
+graph LR
+	A[冷凍室] -- 有益 --&gt; B[冷擬器];
+	B -- 有害 --&gt; C[門封];
+	A -- 有害 --&gt; D[隔熱層];
+	E[膨脹閥] -- 有益 --&gt; F[蒸發器];
+	F --&gt; G[控制面板];
+	G --&gt; H[照明裝置];
+</code></pre>
+<p>將語法貼到可解析markdown語法的編輯器(如: hackmd)，即可得到圖形。</p>
+</div>
+</div>
+<pre class="mermaid">graph LR
+    A[冷凍室] -- 有益 --&gt; B[冷擬器];
+	B -- 有害 --&gt; C[門封];
+	A -- 有害 --&gt; D[隔熱層];
+	E[膨脹閥] -- 有益 --&gt; F[蒸發器];
+	F --&gt; G[控制面板];
+	G --&gt; H[照明裝置];
+</pre>
+<hr />
+<div id="admonition-prompt-36" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 36</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-36"></a></p>
+</div>
+<div>
+<pre><code>產生筆記型電腦的功能分析, 以表格呈現, 欄位包括元件, 有益的功能, 有害的功能
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-5" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-5"></a></p>
+</div>
+<div>
+<p>好的，以下是一個簡單的表格，用於筆記型電腦的功能分析，包括元件、有益的功能和有害的功能。</p>
+<div class="table-wrapper"><table><thead><tr><th>元件</th><th>有益的功能</th><th>有害的功能</th></tr></thead><tbody>
+<tr><td>CPU</td><td>運行應用程式和作業系統</td><td>產生熱量</td></tr>
+<tr><td>顯示器</td><td>顯示圖像</td><td>消耗電量，產生輻射</td></tr>
+<tr><td>鍵盤</td><td>輸入資料</td><td>磨損，需要維護保養</td></tr>
+<tr><td>觸控板</td><td>替代滑鼠進行導航</td><td>誤觸，需要適應操作</td></tr>
+<tr><td>存放裝置</td><td>存儲資料</td><td>可能會損壞或丟失資料</td></tr>
+<tr><td>電池</td><td>提供電力</td><td>有限的使用壽命</td></tr>
+<tr><td>散熱器</td><td>防止過熱，保護元件</td><td>產生噪音和風扇聲</td></tr>
+<tr><td>網路介面卡</td><td>連接網路</td><td>消耗電量，可能會中斷連接</td></tr>
+<tr><td>音效卡</td><td>播放音訊</td><td>可能會產生噪音和破音</td></tr>
+<tr><td>USB介面</td><td>連接外部設備</td><td>插拔次數過多可能會導致損壞</td></tr>
+</tbody></table>
+</div>
+<p>這個表格是一個簡單的例子，您可以根據您的需求自行添加或修改。在功能分析中，您可能需要詳細地考慮每個元件的功能以及可能產生的有益或有害的效應。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-37" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 37</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-37"></a></p>
+</div>
+<div>
+<pre><code>列出功能矛盾
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-6" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-6"></a></p>
+</div>
+<div>
+<p>在功能分析過程中，可能會出現功能矛盾，即兩個或多個有益功能之間的衝突。以下是一些可能出現在筆記型電腦中的功能矛盾： </p>
+<ul>
+<li>CPU的運行速度 vs. 散熱器的噪音水準 </li>
+<li>顯示器的解析度 vs. 電池壽命 </li>
+<li>存放裝置的容量 vs. 存儲速度 </li>
+<li>網路介面卡的速度 vs. 電池壽命 </li>
+<li>USB介面的數量 vs. 設備尺寸和重量 </li>
+<li>觸控板的精度 vs. 誤觸的頻率 </li>
+</ul>
+<p>這些矛盾表明，在滿足一個有益功能的同時，可能會犧牲另一個有益功能。解決這些矛盾的方法之一是使用TRIZ的“矛盾矩陣”來尋找創新解決方案。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-38" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 38</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-38"></a></p>
+</div>
+<div>
+<pre><code>利用TRIZ 40發明原理解決上述的矛盾
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-7" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-7"></a></p>
+</div>
+<div>
+<p>好的，以下是利用TRIZ的40個發明原理，解決上述筆記型電腦中可能出現的功能矛盾的一些示例： </p>
+<ol>
+<li>
+<ul>
+<li><strong>矛盾：CPU的運行速度 vs. 散熱器的噪音水準</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理15“動態變化”和發明原理38“靈活薄膜”來設計一個可伸縮的散熱器，以適應CPU負載的變化，並減少噪音水準。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：顯示器的解析度 vs. 電池壽命</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理31“多孔性”和發明原理37“熱膨脹”來設計一個可以調節解析度的顯示器，當電池壽命受到限制時，可以自動降低解析度，以延長電池使用時間。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：存放裝置的容量 vs. 存儲速度</strong></li>
+<li><strong>解決方案：</strong> 使用發明原理27“動態性能”和發明原理35“參數變化”來設計一種存放裝置，可以自動調整存儲速度和容量之間的平衡，以適應不同的使用需求。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：網路介面卡的速度 vs. 電池壽命</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理6“統一”和發明原理11“減小”來設計一種網路介面卡，可以自動降低網路速度，以延長電池使用時間，同時保持連接的穩定性。 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：USB介面的數量 vs. 設備尺寸和重量</strong></li>
+<li><strong>解決方案：</strong> 使用發明原理25“自動化”和發明原理39“恢復原狀”來設計一種可伸縮的USB介面，可以自動根據連接設備的數量和尺寸，調整介面的大小和數量，以適應不同的使用需求。 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：觸控板的精度 vs. 誤觸的頻率</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理19“轉化為氣體”和發明原理22“反應媒介的變化”來設計一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。 </li>
+</ul>
+</li>
+</ol>
+<p>這些解決方案只是一些簡單的示例，TRIZ的40個發明原理是非常強大和靈活的工具，可以幫助解決各種不同類型的功能矛盾。需要根據具體的情況和需求進行分析和選擇。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-39" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 39</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-39"></a></p>
+</div>
+<div>
+<pre><code>一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。使用何種科學效應可達成?
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-8" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-8"></a></p>
+</div>
+<div>
+<p>在科學上，將表面轉化為氣體狀態的過程被稱為氣態摩擦或氣體動壓效應。當物體表面與氣體接觸時，由於氣體分子的運動，會在物體表面形成一層氣體薄膜，從而減少表面的摩擦力。這種現象被廣泛應用於機械工程和流體力學領域，以減少摩擦、降低能耗和提高運動精度。 
+在觸控板的應用中，可以利用氣態摩擦效應來減少觸控板表面的摩擦力，從而減少誤觸，並提高精度。具體來說，可以使用微細孔或氣體噴射等技術，在觸控板表面形成一層微小的氣體薄膜，以減少與手指之間的接觸面積和摩擦力。這種技術可以根據使用者需求進行調整，以達到更高的精度和更少的誤觸。 
+需要注意的是，利用氣態摩擦效應來實現可調節的觸控板還需要考慮其他因素，如氣體流動、控制和穩定性等問題。因此，需要對該技術進行深入的研究和實驗，以實現可靠的應用。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-40" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 40</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-prompt-40"></a></p>
+</div>
+<div>
+<pre><code>一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。有這方面的專利嗎?
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-9" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch08.html#admonition-assistant-9"></a></p>
+</div>
+<div>
+<p>我很抱歉，由於專利資訊的即時性和複雜性，我無法為您提供最新的、準確的專利資訊。然而，我可以建議您通過以下幾個途徑來查找與可調節的觸控板相關的專利： </p>
+<ul>
+<li><strong>專利資料庫：</strong> 您可以使用Google Patents等專利資料庫，通過輸入相關的關鍵字或專利號來搜索相關的專利資訊。您可以使用篩選器或分類器來縮小搜索結果的範圍，以便更容易找到您所需的資訊。 </li>
+<li><strong>專利商標局網站：</strong> 您可以訪問各國專利商標局的官方網站，例如美國專利商標局（USPTO）、歐洲專利局（EPO）和中國國家智慧財產權局（CNIPA），以查找相關的專利資訊。 </li>
+<li><strong>諮詢專利律師：</strong> 如果您需要更加詳細和精確的專利資訊，您可以諮詢專利律師或專利代理人，他們可以幫助您查找和解釋相關的專利資訊，並説明您申請專利。</li>
+</ul>
+<p>請注意，專利資訊的查找和解釋需要專業知識和經驗，因此建議在進行相關的操作時，尋求專業的幫助和意見。</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="創新情境問卷isq"><a class="header" href="#創新情境問卷isq">創新情境問卷(ISQ)</a></h1>
+<div id="admonition-prompt-41" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 41</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-prompt-41"></a></p>
+</div>
+<div>
+<pre><code>身為TRIZ專家顧問，請記住ISQ的標準問項有以下項目:  
+1. 簡短描述問題(描述有關工程系統(Engineering System)設計的目的，系統的構成，系統所產生的問題)  
+2. 系統相關資訊  
+	2.1 系統名稱(描述研究標的的各個系統名稱，從可能產生的問題中，選定其中的一個系統)  
+	2.2 系統架構(描述所選定的系統其組成的系統、組件)  
+	2.3 系統主要功能(描述選定的系統產生的功能)  
+	2.4 系統環境(描述超系統，子系統的組成)  
+3. 問題的相關資訊  
+	3.1 欲解決的問題(描述所欲解決的有害功能，或是有用功能不足的效應)  
+	3.2 造成問題的(機制)所在(描述造成問題的因果鏈關係，物理因素)  
+	3.3 問題所造成的連鎖效應(描述問題若未能解決所造成的各種損失)  
+	3.4 問題發生的歷史背景(描述過去各種從不同觀點來解決問題的方法)  
+	3.5 其他有類似問題的地方(是否有其他系統也有類似的問題，可加以借鏡來解決)  
+	3.6 其他欲解決的問題(描述其他解決的問題)  
+4. 解答的最理想版本 (描述系統的最理想狀態，在此不考慮限制或技術的可能性)  
+5. 可獲得的資源  
+	- 能場資源(描述可能的能場資源，依序考慮機械能、化學能、光能、聲能、電能、磁能、電磁能  
+	- 空間資源(描述可能的空間資源)  
+	- 時間資源(描述可能的時間資源)  
+	- 資訊資源(描述可能的資訊資源)  
+	- 功能資源(描述可能的功能資源)  
+	- 物質資源(描述可能的物質資源)  
+6. 系統可能的改變方向 (描述系統的創新，是否有所限制?例如法規上，政策上?)
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>了解，TRIZ的ISQ（Inventive Situation Questionnaire）是用來幫助分析和解決技術矛盾和問題的。這套工具提供了一套結構化的問題，幫助用戶深入地探討問題和找到解決方案。
+您所提供的ISQ的標準問項涵蓋了系統的各個方面，從問題描述到資源和潛在的改變方向。它幫助專家或者設計師從多個角度來理解問題和找到最佳的解決方案。
+要有效地使用ISQ，您需要填寫所有這些問項。它不僅會幫助您更好地理解問題，還會幫助您在TRIZ的其他工具和原理中找到相應的解決方案。
+如果您有特定的技術問題或矛盾，我將很高興幫助您使用這些問項進行分析。您只需提供關於問題的詳細資料，然後我可以使用ISQ的框架來幫助您分析和解決這些問題。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-42" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 42</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-prompt-42"></a></p>
+</div>
+<div>
+<pre><code>請依據以上的ISQ問項, 產出關於[系統]的ISQ 
+
+[系統]手機天線
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>根據你提供的 &quot;Innovation Scenario Questionnaire&quot; (ISQ) 結構，以下是針對手機天線的創新設計的 ISQ： </p>
+<ol>
+<li>問題描述： 手機天線是一個關鍵的工程系統，它讓手機能夠與無線網路連接。當前的設計可能導致信號品質不佳，並且可能由於手機體積的縮小而受到限制。 </li>
+<li>系統相關資訊：<br />
+2.1 系統名稱：手機天線系統<br />
+2.2 系統架構：天線、天線接頭、天線控制器<br />
+2.3 主要功能：接收和傳輸無線信號<br />
+2.4 系統環境：手機（超系統），各種子系統包括處理器、電池、顯示屏等</li>
+<li>問題相關資訊：<br />
+3.1 欲解決的問題：信號品質不足，以及天線尺寸限制的問題<br />
+3.2 造成問題的機制：可能由於物理限制和材料性能限制造成<br />
+3.3 問題所造成的連鎖效應：可能導致用戶體驗不佳，並限制手機設計的靈活性<br />
+3.4 問題發生的歷史背景：隨著手機趨向輕薄，天線的設計和尺寸受到更大的限制<br />
+3.5 其他有類似問題的地方：其他無線通訊設備，如平板、筆記本電腦等<br />
+3.6 其他欲解決的問題：例如如何增強對多頻段的支持，如何提高耐用性等</li>
+<li>解答的最理想版本： 最理想的天線將具有極佳的信號接收和傳輸性能，體積小，能適應各種手機設計，並能支持多頻段。 </li>
+<li>可獲得的資源：<br />
+5.1 能場資源：電磁場<br />
+5.2 空間資源：手機內部空間<br />
+5.3 時間資源：信號傳輸和接收的時間窗口<br />
+5.4 資訊資源：關於無線通信標準和技術的資訊<br />
+5.5 功能資源：天線的接收和傳輸功能<br />
+5.6 物質資源：天線製造的材料 </li>
+<li>系統可能的改變方向： 可能的改變方向包括開發新的天線材料和設計來提高性能，以及找到新的方式將天線更好地融入手機設計。這可能需要克服現有的技術限制和法規限制。</li>
+</ol>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-43" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 43</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-prompt-43"></a></p>
+</div>
+<div>
+<pre><code>TRIZ的技術矛盾是指系統中要改善的參數改善後會造成另一個參數惡化，要改善的參數稱為「改善方參數」，造成惡化的參數稱為「惡化方參數」。  
+請從[問題]的描述中找出上述39工程參數中改善方的參數及惡化方的參數   
+[問題] 手機天線品質要好但天線體積要小
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>在這個問題中，我們希望改進的參數（改善方參數）和可能會惡化的參數（惡化方參數）分別是： 
+改善方參數：手機天線的品質。這可能與以下的工程參數有關： 
+* 13.物體穩定性：我們希望天線的信號接收和傳送功能穩定，不會受到干擾。 
+* 14.強度：天線需要有足夠的強度來抵抗物理損害和環境影響。 
+* 15.移動件耐久性：由於手機是移動式設備，天線需要具有高度的耐久性。 
+* 27.可靠度：天線需要在任何時間、任何地點都能提供可靠的服務。 
+惡化方參數：天線的體積。這可能與以下的工程參數有關： 
+* 7.移動件體積：為了保持手機的輕便和攜帶便利，我們希望天線的體積能夠盡可能小。 
+* 12.形狀：天線的形狀和大小可能會影響手機的總體形狀和大小。 </p>
+<p>這種技術矛盾是TRIZ理論中的一個常見問題，通常需要創新的解決方案&gt; 來平衡或克服。例如，我們可能需要找到新的天線設計或材料，以實現高品質和小體積的需求。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-44" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 44</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-prompt-44"></a></p>
+</div>
+<div>
+<pre><code>矛盾矩陣請參考 https://www.triz40.com/aff_Matrix_TRIZ.php  
+將上述的改善方參數與惡化方參數配對, 從矛盾矩陣中找出適合的發明原理  
+再依照發明原理產生新的創意想法
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch09.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>基於你所提供的矛盾，即我們希望改善天線的品質（可靠度）但不希望增加天線的體積（移動件體積）。根據TRIZ矛盾矩陣，我們可以找到以下可能的解決策略： 
+* 原理1 - 分劃：將天線分成多個小部分或不同的層次。這樣可以在不增加體積的情況下增加表面積和信號接收能力。 
+* 原理15 - 动态性：創建一種可伸縮或可調整的天線，使其可以在需要更好的信號時展開，並在不需要時收起來。 
+* 原理17 - 另一種维度：改變天線的形狀或方向，例如使其成為手機內部的一部分，或者讓天線沿著手機的邊緣或角落延伸。 
+* 原理35 - 参数改变：改變天線的材料或設計，以提高其接收和傳送信號的能力。</p>
+<p>總的來說，這些原理都著重在如何在不增加天線體積的前提下，通過創新的設計或技術來提高其品質。我們可以根據這些原理來生成新的創新想法。 </p>
+<hr />
+<pre><code class="language-admonish info title=&quot;Prompt 45&quot;">	跳脫[系統]或[元件]的框架, 提出[系統]或[元件]的理想最終結果  
+
+	[元件] 手機天線
+
+&lt;/div&gt;
+&lt;/div&gt;
+ 
+
+&lt;div id=&quot;admonition-assistant-4&quot; class=&quot;admonition example&quot;&gt;
+&lt;div class=&quot;admonition-title&quot;&gt;
+
+Assistant
+
+&lt;a class=&quot;admonition-anchor-link&quot; href=&quot;#admonition-assistant-4&quot;&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+
+
+跳脫現有的手機天線框架，我們可以想像以下的理想最終結果（IFR）： 
+	* 無需天線：理想的情況可能是我們根本不需要手機天線來傳送和接收訊號。這可能需要我們發展出全新的通訊技術，例如基於量子糾纏的通訊，這種通訊方式不依賴於傳統的電磁波，因此不需要天線。 
+	* 通訊無處不在：無論我們身在何處，無論是在地下還是在深海，甚至是在太空，我們都能得到穩定、高速的通訊服務。這可能需要我們開發出全新的基礎設施，例如基於衛星網絡的全球覆蓋通訊系統。 
+	* 無形的天線：如果我們仍然需要手機天線，那麼理想的天線可能是完全無形的，不會影響手機的外觀和攜帶性。這可能需要我們開發出能夠整合到手機殼體或屏幕中的天線技術。 
+
+以上都是跳脫現有手機天線框架的理想最終結果。這些理想可能需要我們在通訊技術、材料科學等多個領域取得重大突破，但它們提供了一個方向，指引我們向更好的未來努力。
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="科學效應"><a class="header" href="#科學效應">科學效應</a></h1>
+<div id="admonition-prompt-46" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 46</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-prompt-46"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問, 必須知道應用科學效應來協助產生創意想法，科學效應包括物理、化學、機械、幾何等等，
+請參考http://mhsung.idv.fcu.edu.tw/TRIZ/4_Problem_Solving/Effects/PE_index.htm。 
+請應用科學效應提出創新的[系統]或[元件]。 
+[元件] 手機天線
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-assistant"></a></p>
+</div>
+<div>
+<p>應用科學效應在手機天線的設計上，我們可以想到以下的創新方法： </p>
+<ul>
+<li>應用表面電漿共振效應 (Surface Plasmon Resonance)：這種效應允許特定波長的光或其他電磁波在金屬和介質界面之間產生共振。這種科學效應可以被用於設計新型的微型化和高效的手機天線。 </li>
+<li>應用形狀記憶合金 (Shape Memory Alloys)：這種材料具有在特定溫度下返回原始形狀的特性，這種效應可以用於設計能夠根據需求伸縮的手機天線，例如在訊號弱的地方可以自動伸出來增強接收能力。 </li>
+<li>應用隨機共振效應 (Stochastic Resonance)：這種效應是指在某些系統中，有用訊號的可檢測性可以通過在系統中加入一定量的隨機噪聲而得到增強。這種效應可以用來設計更好的訊號處理演算法，以提高手機天線在噪聲較高環境下的接收性能。 </li>
+</ul>
+<p>以上的創新方法需要進一步的研發和驗證，但它們提供了對手機天線設計的新視角，可能帶來重大的突破。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-47" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 47</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-prompt-47"></a></p>
+</div>
+<div>
+<pre><code>有哪些科學效應可以支持[系統]或[元件] 
+
+[元件] 液態觸控板
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>對於液態觸控板來說，以下列舉的幾種科學效應可能可以提供一些幫助和應用： </p>
+<ul>
+<li><strong>電滲效應（Electroosmosis）：</strong> 在電滲效應中，液體會在電場的作用下流動。這可以用來精確地控制液體在觸控板上的流動和分佈，實現高度靈敏和精確的控制。 </li>
+<li><strong>電致變色效應（Electrochromism）：</strong> 電致變色材料的顏色可以通過改變電場來改變。這可以被用來在液態觸控板上顯示視覺效果，例如反饋使用者的觸控位置和壓力。 </li>
+<li><strong>壓電效應（Piezoelectricity）：</strong> 壓電材料在壓力作用下會產生電壓。這可以被用來感測使用者在觸控板上施加的壓力，提供更多維度的互動方式。 </li>
+<li><strong>熱膨脹效應（Thermal Expansion）：</strong> 熱膨脹效應是指物質在溫度變化時體積的變化。透過精確地控制液態觸控板的溫度，我們可以改變其體積和形狀，以實現更多種類的觸控反饋。 </li>
+</ul>
+<p>以上的科學效應可以用來設計和實現具有高度靈敏度、多維度互動和豐富視覺反饋的液態觸控板。然而，這些應用可能需要進一步的技術開發和驗證。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-48" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 48</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-prompt-48"></a></p>
+</div>
+<div>
+<pre><code>有哪些科學效應可以支持[系統]或[元件]  
+
+[元件] 使用氣體的筆記型電腦觸控板
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>使用氣體作為筆記型電腦觸控板的元件可以考慮以下一些科學效應： </p>
+<ul>
+<li><strong>電靜力效應（Electrostatic Effect）：</strong> 使用靜電場控制氣體流動或聚焦。觸控行為可以通過改變電場模式來被準確地感測和識別。 </li>
+<li><strong>流體動力學效應（Fluid Dynamics）：</strong> 在壓力差的作用下，氣體會從高壓區流向低壓區。通過改變壓力分佈，可以模擬物理按鍵的觸感。 </li>
+<li><strong>熱對流效應（Thermal Convection）：</strong> 在加熱的情況下，氣體會產生對流。通過控制對流，可以提供溫度反饋，進一步豐富使用者的觸控體驗。 </li>
+<li><strong>光學折射效應（Optical Refraction）：</strong> 氣體和固體或液體介質的接口會使光產生折射。通過改變氣體的分佈和形狀，可以創造出具有視覺反饋的光學效果。 </li>
+</ul>
+<p>以上的科學效應可用於設計和實現一種新型的、具有高度靈敏度和多維度互動能力的氣體觸控板。然而，這些設計可能需要進一步的技術開發和驗證。</p>
+</div>
+</div>
+<hr />
+<p>Chat GPT 4.0提供外掛功能，其中Ai PDF可以讀取上傳的PDF文檔，我們將科學效應列表成PDF文檔，並上傳至aipdf.app，再將鏈結置於Prompt中，即可增強ChatGPT的特定知識。 </p>
+<div id="admonition-prompt-49" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 49</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-prompt-49"></a></p>
+</div>
+<div>
+<pre><code>請參考 pdf連結https://aipdf.app/5qKZDP97oAFm/88B3.pdf 學習科學效應
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>Used Ai PDF 
+這份PDF文件似乎是關於某種科學效應的列表，以下是摘要的部分內容： </p>
+<ul>
+<li>頁面1: 
+功能代碼、實現的功能、TRIZ推薦的科學效應和現象 
+<ul>
+<li>測量溫度 </li>
+<li>降低溫度 </li>
+<li>提高溫度 </li>
+<li>熱膨脹 </li>
+<li>熱雙金屬片 </li>
+<li>熱電現象 </li>
+<li>熱電子發射 </li>
+<li>熱輻射 ...等等 </li>
+</ul>
+</li>
+<li>頁面2-5: 這些頁面似乎重複了頁面1的內容，列出了不同的科學效應和現象，如熱電現象、熱電子發射、熱輻射等。 
+*頁面6: 
+<ul>
+<li>壓電效應 </li>
+<li>磁彈性 </li>
+<li>壓磁效應 </li>
+<li>彈性變形 </li>
+<li>積蓄機械能與熱能的一級相變 ...等等 </li>
+</ul>
+</li>
+</ul>
+<p>這只是文件的部分摘要，並未完全涵蓋所有內容。我已完成整個文件的處理。您還想知道什麼呢？</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-50" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 50</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-prompt-50"></a></p>
+</div>
+<div>
+<pre><code>應用以上科學效應, 提出伺服器散熱裝置的創新構想
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="ch10.html#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>基於上述的科學效應，我們可以提出以下伺服器散熱裝置的創新構想： </p>
+<ul>
+<li><strong>熱電現象 (Thermoelectric Effect):</strong>
+<ul>
+<li>熱電發電: 利用伺服器產生的熱能透過熱電材料轉換成電能，這可以部分回收伺服器消耗的能量，同時也有助於降低伺服器的溫度。 </li>
+<li>熱電冷卻: 使用熱電冷卻器（Peltier元件）在伺服器的熱點上，當通電時，它可以將熱從一側轉移到另一側，從而冷卻伺服器。 </li>
+</ul>
+</li>
+<li><strong>熱膨脹 (Thermal Expansion):</strong> 設計一種擴展/收縮的散熱片，當溫度上升時，散熱片自動擴展以增加散熱面積，當溫度下降時，它們收縮以減少空間佔用。 </li>
+<li><strong>熱輻射 (Thermal Radiation):</strong> 使用特殊的塗層或材料，如黑體塗料，來增加伺服器表面的熱輻射效率，這有助於更快速地散發熱能。 </li>
+<li><strong>熱電子發射 (Thermionic Emission):</strong> 利用熱電子發射的原理，設計一種新型的散熱裝置，當伺服器溫度達到一定程度時，這些裝置可以發射電子，從而消耗熱能。 </li>
+<li><strong>壓電效應 (Piezoelectric Effect):</strong> 在伺服器的某些部分，如風扇或其他移動部件，使用壓電材料。當這些部件移動時，壓電材料可以產生電壓，這可以用來驅動其他小型裝置或回饋到系統中。 </li>
+<li><strong>磁彈性 (Magnetostriction):</strong> 利用磁彈性材料在伺服器的散熱風扇上，當風扇旋轉時，這些材料會因應磁場的變化而產生微小的形狀變化，這可以用來調節風扇的速度或方向，以最佳化散熱效果。 </li>
+</ul>
+<p>這些只是基於上述科學效應的一些建議。在實際應用中，還需要進一步的研究和測試來確定其可行性和效率。</p>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

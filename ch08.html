@@ -1,0 +1,610 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>功能分析</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="mdbook-admonish.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00.html">TRIZ x AI</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">基礎篇</li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 九宮格</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 小精靈法(SLP)</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> STC</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">4.</strong> 最終理想解</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> 40發明原理</a></li><li class="chapter-item expanded "><a href="ch06.html"><strong aria-hidden="true">6.</strong> 資源</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">應用篇</li><li class="chapter-item expanded "><a href="ch07.html"><strong aria-hidden="true">7.</strong> 技術矛盾</a></li><li class="chapter-item expanded "><a href="ch08.html" class="active"><strong aria-hidden="true">8.</strong> 功能分析</a></li><li class="chapter-item expanded "><a href="ch09.html"><strong aria-hidden="true">9.</strong> 創新情境問卷(ISQ)</a></li><li class="chapter-item expanded "><a href="ch10.html"><strong aria-hidden="true">10.</strong> 科學效應</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><div>關於作者</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="功能分析"><a class="header" href="#功能分析">功能分析</a></h1>
+<div id="admonition-prompt-31" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 31</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-31"></a></p>
+</div>
+<div>
+<pre><code>作為一位TRIZ專家與顧問, 請運用功能分析, 分析冰箱, 請以表格列出元件, 有益的功能, 有害的功能
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant"></a></p>
+</div>
+<div>
+<p>TRIZ專家進行功能分析時，會將產品或系統分解成各個元件，並分析這些元件的有益功能和有害功能。以下是對冰箱進行功能分析的表格： </p>
+<div class="table-wrapper"><table><thead><tr><th>元件</th><th>有益功能</th><th>有害功能</th></tr></thead><tbody>
+<tr><td>壓縮機</td><td>壓縮冷媒，使冷媒循環，冷卻冰箱內部</td><td>噪音，耗能，散熱導致周圍環境溫度升高</td></tr>
+<tr><td>冷凝器</td><td>釋放熱量，使冷媒冷卻並變為液態</td><td>散熱導致周圍環境溫度升高</td></tr>
+<tr><td>膨脹閥</td><td>使冷媒膨脹，冷卻蒸發器</td><td>故障可能導致冷媒無法正常循環</td></tr>
+<tr><td>蒸發器</td><td>吸收熱量，使冰箱內部保持低溫</td><td>需定期除霜，以防結霜影響效率</td></tr>
+<tr><td>隔熱層</td><td>減少冰箱內外溫度交換，保持冷藏效果</td><td>隔熱材料可能對環境造成污染</td></tr>
+<tr><td>門</td><td>保持冰箱密封，阻止熱量交換</td><td>開門時可能造成溫度波動</td></tr>
+<tr><td>門封</td><td>加強門的密封性能，防止冷氣泄漏</td><td>門封老化可能導致密封性能下降</td></tr>
+<tr><td>控制面板</td><td>調節冰箱內部溫度，控制開關及其他功能</td><td>故障可能導致冰箱失控</td></tr>
+<tr><td>照明裝置</td><td>方便用戶在昏暗環境下查看冰箱內部物品</td><td>長時間開燈可能導致浪費能源，產生熱量</td></tr>
+<tr><td>置物架</td><td>便於存放和整理食品</td><td>過多食品可能阻擋冷氣流通，影響冷卻效果</td></tr>
+</tbody></table>
+</div>
+<p>在進行功能分析後，我們可以針對有害功能進行改進，提高產品性能和使用者滿意度。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-32" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 32</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-32"></a></p>
+</div>
+<div>
+<pre><code>這些元件間是否有交互作用, 以表格列出元件一, 元件二, 交互作用
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>以下表格展示了冰箱中各元件間的交互作用： </p>
+<div class="table-wrapper"><table><thead><tr><th>元件一</th><th>元件二</th><th>交互作用</th></tr></thead><tbody>
+<tr><td>壓縮機</td><td>冷凝器</td><td>壓縮機將冷媒壓縮後送入冷凝器進行冷卻</td></tr>
+<tr><td>壓縮機</td><td>膨脹閥</td><td>壓縮機將冷媒送入膨脹閥，使冷媒在膨脹閥後膨脹冷卻</td></tr>
+<tr><td>冷凝器</td><td>膨脹閥</td><td>冷凝器冷卻後的冷媒進入膨脹閥進行膨脹</td></tr>
+<tr><td>膨脹閥</td><td>蒸發器</td><td>膨脹閥使冷媒膨脹後流入蒸發器，以便吸收熱量冷卻冰箱內部</td></tr>
+<tr><td>蒸發器</td><td>壓縮機</td><td>蒸發器將吸收熱量後的冷媒氣體送回壓縮機再次進行循環</td></tr>
+<tr><td>蒸發器</td><td>置物架</td><td>蒸發器吸收熱量使置物架上的食品冷卻</td></tr>
+<tr><td>隔熱層</td><td>冷凝器</td><td>隔熱層減少冷凝器釋放的熱量與冰箱內部的熱量交換</td></tr>
+<tr><td>隔熱層</td><td>蒸發器</td><td>隔熱層減少蒸發器吸收的熱量與外部環境的熱量交換</td></tr>
+<tr><td>門</td><td>門封</td><td>門與門封共同密封冰箱，防止冷氣泄漏</td></tr>
+<tr><td>控制面板</td><td>壓縮機</td><td>控制面板根據設定的溫度控制壓縮機的運行</td></tr>
+<tr><td>控制面板</td><td>照明裝置</td><td>控制面板控制照明裝置的開關</td></tr>
+<tr><td>置物架</td><td>照明裝置</td><td>照明裝置為置物架上的食品提供照明，方便用戶查看和取用</td></tr>
+</tbody></table>
+</div>
+<p>分析各元件間的交互作用有助於了解產品的工作原理</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-33" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 33</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-33"></a></p>
+</div>
+<div>
+<pre><code>分析上述交互作用的矛盾點
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>根據上述冰箱元件間的交互作用，我們可以找到以下矛盾點： </p>
+<ul>
+<li><strong>壓縮機與冷凝器：</strong> 壓縮機需要提供足夠的能量來壓縮冷媒，但這會導致散熱增加，使得冷凝器需要釋放更多熱量。此矛盾點需要在能效和散熱之間找到平衡。 </li>
+<li><strong>膨脹閥與蒸發器：</strong> 膨脹閥需要為蒸發器提供足夠的冷媒以保持低溫，但過多的冷媒流量可能會導致結霜。此矛盾點需要在冷卻效果和結霜問題之間找到平衡。 </li>
+<li><strong>蒸發器與置物架：</strong> 蒸發器需要保持冰箱內部的低溫，但過多的食品可能會阻擋冷氣流通，降低冷卻效果。此矛盾點需要在冷卻效果和儲存空間之間找到平衡。 </li>
+<li><strong>隔熱層與環境：</strong> 隔熱層需要有效地阻止冰箱內外溫度交換，但隔熱材料可能對環境造成污染。此矛盾點需要在隔熱性能和環保之間找到平衡。 </li>
+<li><strong>門封與使用壽命：</strong> 門封需要具有良好的密封性能，但隨著時間的推移，門封可能會老化，導致密封性能下降。此矛盾點需要在密封性能和使用壽命之間找到平衡。 </li>
+<li><strong>控制面板與耗能：</strong> 控制面板需要提供準確的溫度控制，但同時可能會增加能耗。此矛盾點需要在溫度控制和能耗之間找到平衡。 </li>
+<li><strong>照明裝置與能耗：</strong> 照明裝置需要為冰箱內部提供足夠的照明，但長時間開燈可能導致浪費能源和產生熱量。此矛盾點需要在照明效果和能耗之間找到平衡。 </li>
+</ul>
+<p>通過分析這些矛盾點，我們可以針對具體問題進行優化，改善冰箱的性能</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-34" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 34</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-34"></a></p>
+</div>
+<div>
+<pre><code>利用TRIZ 40發明原理解決上述的矛盾點, 提出創新構想
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>根據TRIZ的40個發明原理，我們可以針對上述冰箱矛盾點提出以下創新構想： </p>
+<ol>
+<li>壓縮機與冷凝器： 
+<ul>
+<li>原理35 - 參數變化：選擇更高效的壓縮機和冷凝器，以提高能效和降低散熱。 </li>
+<li>原理28 - 代替機械系統：採用非機械冷卻技術，如熱電冷卻，以減少散熱和能耗。 </li>
+</ul>
+</li>
+<li>膨脹閥與蒸發器： 
+<ul>
+<li>原理3 - 局部品質：設計具有不同孔徑的膨脹閥，以便根據需求調節冷媒流量。 </li>
+<li>原理15 - 功能動態：使用可調節的膨脹閥，根據結霜情況自動調整冷媒流量。 </li>
+</ul>
+</li>
+<li>蒸發器與置物架： 
+<ul>
+<li>原理7 - 嵌套：設計可調節高度的置物架，以便確保冷氣流通。 </li>
+<li>原理19 - 週期性動作：定期開啟風扇，增加冰箱內部的氣流，提高冷卻效果。 </li>
+</ul>
+</li>
+<li>隔熱層與環境： 
+<ul>
+<li>原理26 - 拷貝：使用具有良好隔熱性能且對環境友好的材料，如生物基聚氨酯。 </li>
+<li>原理30 - 彈性薄膜與薄片：選擇具有更高熱阻的多層隔熱材料，以提高隔熱性能。 </li>
+</ul>
+</li>
+<li>門封與使用壽命： 
+<ul>
+<li>原理16 - 部分或過量：使用雙層門封以提高密封性能。 </li>
+<li>原理27 - 廉價的短暫替代品：選擇易更換的門封設計，方便用戶定期更換。 </li>
+</ul>
+</li>
+<li>控制面板與耗能： 
+<ul>
+<li>原理2 - 取出：採用低功耗的控制面板設計。 </li>
+<li>原理10 - 預先行動：使用智能感測器預測溫度波動，提前調節控制面板的設置。 </li>
+</ul>
+</li>
+<li>照明裝置與能耗： 
+<ul>
+<li>原理23 - 反作用：選擇高效能的LED燈作為照明裝置，降低能耗。</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<hr />
+<p>一般功能分析需要繪製圖形，雖然chatGPT無法直接繪圖，但可以透過chatGPT的協助產生Makdown語法來繪製相關的圖形，以下Prompt即示範如何經由chatGPT產生功能分析圖形。</p>
+<div id="admonition-prompt-35" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 35</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-35"></a></p>
+</div>
+<div>
+<pre><code>使用markdown diagram 繪製冰箱的方塊圖, 元件繪成節點，元件與元件的關係繪製成有方向的連接線, 節點名稱以中文表示, 關係如果是有益的, 須標示有益, 關係如果是有害的, 須標示有害
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>由於 Markdown 不直接支持繪圖，我們可以使用類似於 Ascii Flow 或 Mermaid 這類的工具來繪製冰箱方塊圖。在這裡，我將提供使用 Mermaid 語法的示例。您需要在支持 Mermaid 的 Markdown 編輯器中貼入以下代碼，如 Typora 或 StackEdit：</p>
+<pre><code>mermaid
+graph LR
+	A[冷凍室] -- 有益 --&gt; B[冷擬器];
+	B -- 有害 --&gt; C[門封];
+	A -- 有害 --&gt; D[隔熱層];
+	E[膨脹閥] -- 有益 --&gt; F[蒸發器];
+	F --&gt; G[控制面板];
+	G --&gt; H[照明裝置];
+</code></pre>
+<p>將語法貼到可解析markdown語法的編輯器(如: hackmd)，即可得到圖形。</p>
+</div>
+</div>
+<pre class="mermaid">graph LR
+    A[冷凍室] -- 有益 --&gt; B[冷擬器];
+	B -- 有害 --&gt; C[門封];
+	A -- 有害 --&gt; D[隔熱層];
+	E[膨脹閥] -- 有益 --&gt; F[蒸發器];
+	F --&gt; G[控制面板];
+	G --&gt; H[照明裝置];
+</pre>
+<hr />
+<div id="admonition-prompt-36" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 36</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-36"></a></p>
+</div>
+<div>
+<pre><code>產生筆記型電腦的功能分析, 以表格呈現, 欄位包括元件, 有益的功能, 有害的功能
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-5" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-5"></a></p>
+</div>
+<div>
+<p>好的，以下是一個簡單的表格，用於筆記型電腦的功能分析，包括元件、有益的功能和有害的功能。</p>
+<div class="table-wrapper"><table><thead><tr><th>元件</th><th>有益的功能</th><th>有害的功能</th></tr></thead><tbody>
+<tr><td>CPU</td><td>運行應用程式和作業系統</td><td>產生熱量</td></tr>
+<tr><td>顯示器</td><td>顯示圖像</td><td>消耗電量，產生輻射</td></tr>
+<tr><td>鍵盤</td><td>輸入資料</td><td>磨損，需要維護保養</td></tr>
+<tr><td>觸控板</td><td>替代滑鼠進行導航</td><td>誤觸，需要適應操作</td></tr>
+<tr><td>存放裝置</td><td>存儲資料</td><td>可能會損壞或丟失資料</td></tr>
+<tr><td>電池</td><td>提供電力</td><td>有限的使用壽命</td></tr>
+<tr><td>散熱器</td><td>防止過熱，保護元件</td><td>產生噪音和風扇聲</td></tr>
+<tr><td>網路介面卡</td><td>連接網路</td><td>消耗電量，可能會中斷連接</td></tr>
+<tr><td>音效卡</td><td>播放音訊</td><td>可能會產生噪音和破音</td></tr>
+<tr><td>USB介面</td><td>連接外部設備</td><td>插拔次數過多可能會導致損壞</td></tr>
+</tbody></table>
+</div>
+<p>這個表格是一個簡單的例子，您可以根據您的需求自行添加或修改。在功能分析中，您可能需要詳細地考慮每個元件的功能以及可能產生的有益或有害的效應。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-37" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 37</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-37"></a></p>
+</div>
+<div>
+<pre><code>列出功能矛盾
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-6" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-6"></a></p>
+</div>
+<div>
+<p>在功能分析過程中，可能會出現功能矛盾，即兩個或多個有益功能之間的衝突。以下是一些可能出現在筆記型電腦中的功能矛盾： </p>
+<ul>
+<li>CPU的運行速度 vs. 散熱器的噪音水準 </li>
+<li>顯示器的解析度 vs. 電池壽命 </li>
+<li>存放裝置的容量 vs. 存儲速度 </li>
+<li>網路介面卡的速度 vs. 電池壽命 </li>
+<li>USB介面的數量 vs. 設備尺寸和重量 </li>
+<li>觸控板的精度 vs. 誤觸的頻率 </li>
+</ul>
+<p>這些矛盾表明，在滿足一個有益功能的同時，可能會犧牲另一個有益功能。解決這些矛盾的方法之一是使用TRIZ的“矛盾矩陣”來尋找創新解決方案。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-38" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 38</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-38"></a></p>
+</div>
+<div>
+<pre><code>利用TRIZ 40發明原理解決上述的矛盾
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-7" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-7"></a></p>
+</div>
+<div>
+<p>好的，以下是利用TRIZ的40個發明原理，解決上述筆記型電腦中可能出現的功能矛盾的一些示例： </p>
+<ol>
+<li>
+<ul>
+<li><strong>矛盾：CPU的運行速度 vs. 散熱器的噪音水準</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理15“動態變化”和發明原理38“靈活薄膜”來設計一個可伸縮的散熱器，以適應CPU負載的變化，並減少噪音水準。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：顯示器的解析度 vs. 電池壽命</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理31“多孔性”和發明原理37“熱膨脹”來設計一個可以調節解析度的顯示器，當電池壽命受到限制時，可以自動降低解析度，以延長電池使用時間。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：存放裝置的容量 vs. 存儲速度</strong></li>
+<li><strong>解決方案：</strong> 使用發明原理27“動態性能”和發明原理35“參數變化”來設計一種存放裝置，可以自動調整存儲速度和容量之間的平衡，以適應不同的使用需求。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：網路介面卡的速度 vs. 電池壽命</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理6“統一”和發明原理11“減小”來設計一種網路介面卡，可以自動降低網路速度，以延長電池使用時間，同時保持連接的穩定性。 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：USB介面的數量 vs. 設備尺寸和重量</strong></li>
+<li><strong>解決方案：</strong> 使用發明原理25“自動化”和發明原理39“恢復原狀”來設計一種可伸縮的USB介面，可以自動根據連接設備的數量和尺寸，調整介面的大小和數量，以適應不同的使用需求。 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>矛盾：觸控板的精度 vs. 誤觸的頻率</strong> </li>
+<li><strong>解決方案：</strong> 使用發明原理19“轉化為氣體”和發明原理22“反應媒介的變化”來設計一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。 </li>
+</ul>
+</li>
+</ol>
+<p>這些解決方案只是一些簡單的示例，TRIZ的40個發明原理是非常強大和靈活的工具，可以幫助解決各種不同類型的功能矛盾。需要根據具體的情況和需求進行分析和選擇。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-39" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 39</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-39"></a></p>
+</div>
+<div>
+<pre><code>一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。使用何種科學效應可達成?
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-8" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-8"></a></p>
+</div>
+<div>
+<p>在科學上，將表面轉化為氣體狀態的過程被稱為氣態摩擦或氣體動壓效應。當物體表面與氣體接觸時，由於氣體分子的運動，會在物體表面形成一層氣體薄膜，從而減少表面的摩擦力。這種現象被廣泛應用於機械工程和流體力學領域，以減少摩擦、降低能耗和提高運動精度。 
+在觸控板的應用中，可以利用氣態摩擦效應來減少觸控板表面的摩擦力，從而減少誤觸，並提高精度。具體來說，可以使用微細孔或氣體噴射等技術，在觸控板表面形成一層微小的氣體薄膜，以減少與手指之間的接觸面積和摩擦力。這種技術可以根據使用者需求進行調整，以達到更高的精度和更少的誤觸。 
+需要注意的是，利用氣態摩擦效應來實現可調節的觸控板還需要考慮其他因素，如氣體流動、控制和穩定性等問題。因此，需要對該技術進行深入的研究和實驗，以實現可靠的應用。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-40" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 40</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-40"></a></p>
+</div>
+<div>
+<pre><code>一種可調節的觸控板，可以在觸摸時將表面轉化為氣體狀態，減少誤觸，同時提高精度。有這方面的專利嗎?
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-9" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-9"></a></p>
+</div>
+<div>
+<p>我很抱歉，由於專利資訊的即時性和複雜性，我無法為您提供最新的、準確的專利資訊。然而，我可以建議您通過以下幾個途徑來查找與可調節的觸控板相關的專利： </p>
+<ul>
+<li><strong>專利資料庫：</strong> 您可以使用Google Patents等專利資料庫，通過輸入相關的關鍵字或專利號來搜索相關的專利資訊。您可以使用篩選器或分類器來縮小搜索結果的範圍，以便更容易找到您所需的資訊。 </li>
+<li><strong>專利商標局網站：</strong> 您可以訪問各國專利商標局的官方網站，例如美國專利商標局（USPTO）、歐洲專利局（EPO）和中國國家智慧財產權局（CNIPA），以查找相關的專利資訊。 </li>
+<li><strong>諮詢專利律師：</strong> 如果您需要更加詳細和精確的專利資訊，您可以諮詢專利律師或專利代理人，他們可以幫助您查找和解釋相關的專利資訊，並説明您申請專利。</li>
+</ul>
+<p>請注意，專利資訊的查找和解釋需要專業知識和經驗，因此建議在進行相關的操作時，尋求專業的幫助和意見。</p>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch07.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch09.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch07.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch09.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

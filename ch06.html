@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>資源</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="mdbook-admonish.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00.html">TRIZ x AI</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">基礎篇</li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 九宮格</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 小精靈法(SLP)</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> STC</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">4.</strong> 最終理想解</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> 40發明原理</a></li><li class="chapter-item expanded "><a href="ch06.html" class="active"><strong aria-hidden="true">6.</strong> 資源</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">應用篇</li><li class="chapter-item expanded "><a href="ch07.html"><strong aria-hidden="true">7.</strong> 技術矛盾</a></li><li class="chapter-item expanded "><a href="ch08.html"><strong aria-hidden="true">8.</strong> 功能分析</a></li><li class="chapter-item expanded "><a href="ch09.html"><strong aria-hidden="true">9.</strong> 創新情境問卷(ISQ)</a></li><li class="chapter-item expanded "><a href="ch10.html"><strong aria-hidden="true">10.</strong> 科學效應</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><div>關於作者</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="資源"><a class="header" href="#資源">資源</a></h1>
+<div id="admonition-prompt-21" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 21</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-21"></a></p>
+</div>
+<div>
+<pre><code>作為TRIZ專家顧問，必須了解TRIZ理論所稱的資源有六大類：
+時間資源、空間資源、物質資源、能場資源、功能資源、資訊資源等。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant"></a></p>
+</div>
+<div>
+<p>這是對的，根據TRIZ理論，資源可以大致分為以下六大類： </p>
+<ul>
+<li><strong>時間資源：</strong> 這涉及到生產和操作的時間。例如，生產時間可以縮短，產品生命週期可以延長，或者系統的操作時間可以優化。 </li>
+<li><strong>空間資源：</strong> 這涉及到生產和操作的空間。例如，可以通過設計來最小化產品的尺寸，或者可以優化工廠佈局以改進生產效率。 </li>
+<li><strong>物質資源：</strong> 這涉及到用於生產和操作的物料。例如，可以尋找替代的原料來降低成本，或者可以改進材料的使用效率以降低浪費。 </li>
+<li><strong>能場資源：</strong> 這涉及到生產和操作的能源。例如，可以尋找替代的能源來降低能源成本，或者可以改進能源的使用效率以降低能源消耗。 </li>
+<li><strong>功能資源：</strong> 這涉及到產品或系統的功能。例如，可以增加新的功能以提高產品的價值，或者可以改進現有功能的效率以提高效能。 </li>
+<li><strong>資訊資源：</strong> 這涉及到生產和操作的資訊。例如，可以利用資訊科技來改進生產管理，或者可以利用資訊科技來改進產品的功能。 </li>
+</ul>
+<p>理解這些資源的類型有助於我們更好地應用TRIZ理論來解決實際問題。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-22" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 22</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-22"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源 ? 
+[情境] 鐵達尼號
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>在&quot;鐵達尼號&quot;的情境中，我們可以根據TRIZ理論的六大資源類型來列出以下的資源： </p>
+<ul>
+<li><strong>時間資源：</strong> 航程的時間、工作人員的班次時間、乘客的閒暇時間。 </li>
+<li><strong>空間資源：</strong> 船艙的空間、甲板的空間、儲藏室的空間，以及船舶內的其他設施空間。 </li>
+<li><strong>物質資源：</strong> 船體及船上設施的材料、備用零件、食物、飲料、衣物以及其他物資。 </li>
+<li><strong>能場資源：</strong> 船艦的推進能量（如煤或燃料）、電力（用於照明、通訊、廚房設備等）、人力（乘客和工作人員的勞動力）。 </li>
+<li><strong>功能資源：</strong> 船上的設施及服務，如餐廳、健身房、圖書館、醫護設施等；船隻本身的運輸功能以及求救設備（如救生艇）的功能。 </li>
+<li><strong>資訊資源：</strong> 船艦的導航信息、氣象信息、航程計劃、乘客和工作人員的資訊、急難求救的通訊設施等。 </li>
+</ul>
+<p>以上的例子只是一部分，實際的資源可能還包括更多。不過這些都依賴於具體的情境和需求。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-23" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 23</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-23"></a></p>
+</div>
+<div>
+<pre><code>列出[系統]或[元件]的六大資源  
+
+[系統] 伺服器
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>一般而言，伺服器系統中包含了六大類型的資源： </p>
+<ul>
+<li><strong>時間資源：</strong> 這包括伺服器的運行時間、維護時間、資料傳輸時間以及資料處理時間等。 </li>
+<li><strong>空間資源：</strong> 伺服器需要存放的物理空間，包括機架空間、伺服器室的面積和高度、以及數據存儲空間等。 </li>
+<li><strong>物質資源：</strong> 這包括伺服器硬體本身（如處理器、內存、硬盤驅動器等）、冷卻系統、電源裝置、連接線路和數據中心的設施等。 </li>
+<li><strong>能場資源：</strong> 伺服器需要電力來運行，而冷卻系統則需要消耗能量以防止過熱。同時，伺服器運行時產生的廢熱也可以被視為一種潛在的能源。 </li>
+<li><strong>功能資源：</strong> 伺服器可以提供各種功能，例如資料存儲、資料處理、網路服務、安全管理等。 </li>
+<li><strong>資訊資源：</strong> 伺服器存儲和處理的數據本身就是一種重要的資源，此外，伺服器運行的日誌、狀態報告等信息也是有價值的資訊資源。 </li>
+</ul>
+<p>以上就是伺服器系統中的六大類型資源。在實際的運營和管理中，我們應該充分利用這些資源，以提升伺服器的性能和效率，並降低成本和風險。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-24" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 24</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-24"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源  
+
+[情境] 電影: 絕地救援的火星太空站(The Martian)
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>《絕地救援》（The Martian）是一部描述太空人馬克·瓦特尼在火星上遭遇不幸被遺棄，並必須使用各種科學方法和資源來生存，直到他被營救的電影。在這樣的情境下，馬克所能利用的資源包括： </p>
+<ul>
+<li><strong>時間資源：</strong> 馬克知道他需要在火星上存活一定的時間，直到下一次的補給飛船抵達火星。這段時間就是他必須有效利用的資源。 </li>
+<li><strong>空間資源：</strong> 他所在的火星基地“神舟”生活模組為他提供了有限的生活和實驗空間。 </li>
+<li><strong>物質資源：</strong> 
+<ul>
+<li>留下的食物供應。 </li>
+<li>破損的通訊設備。 </li>
+<li>之前的火星任務留下的各種工具和材料，例如火星車。 </li>
+</ul>
+</li>
+<li><strong>能場資源：</strong> 
+<ul>
+<li>基地內的電力供應系統。 </li>
+<li>太陽能板，可以為火星車和基地提供能量。 </li>
+</ul>
+</li>
+<li><strong>功能資源：</strong> 
+<ul>
+<li>他的科學和工程知識，讓他可以解決各種問題，例如如何生產水或種植食物。 </li>
+<li>“神舟”生活模組的各種設施，例如水回收系統。 </li>
+</ul>
+</li>
+<li><strong>資訊資源：</strong> 
+<ul>
+<li>他回憶起的訓練和知識，這幫助他解決火星上的生存問題。 </li>
+<li>當他重新建立與地球的通訊時，從NASA那裡得到的資訊和指導。</li>
+</ul>
+</li>
+</ul>
+<p>這部電影深入地探討了如何在極端環境中充分利用有限的資源，並通過創造性的方法來解決看似不可能的問題。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-25" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 25</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-25"></a></p>
+</div>
+<div>
+<pre><code>請列出[情境]上有那些資源  
+
+[情境] 台北101大樓
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>台北101大樓是台灣的一座摩天大樓，當時曾是全球最高的建築。在這個情境下，台北101擁有的資源可以細分為以下六大類： </p>
+<ul>
+<li><strong>時間資源：</strong> 
+<ul>
+<li>101大樓作為辦公室和商場，其營業時間、辦公時間和各種活動時段都是時間資源。 </li>
+</ul>
+</li>
+<li><strong>空間資源：</strong> 
+<ul>
+<li>大樓內的辦公空間。 </li>
+<li>商場和零售店鋪。 </li>
+<li>觀景台，提供市民和遊客俯瞰台北市的景觀。 </li>
+<li>地下停車場。 </li>
+<li>會議室和活動空間。 </li>
+</ul>
+</li>
+<li><strong>物質資源：</strong> 
+<ul>
+<li>大樓內的設施，如電梯、扶手電梯、照明系統等。 </li>
+<li>裝潢和家具。 </li>
+<li>供應商和店鋪所提供的商品和服務。 </li>
+<li>防震的大型調諧質量阻尼器，可以減少大樓因地震或強風而搖晃。 </li>
+</ul>
+</li>
+<li><strong>能量資源：</strong> 
+<ul>
+<li>電力供應，為大樓的各種設施提供動力。 </li>
+<li>大樓的空調系統。 </li>
+<li>備用發電機。 </li>
+</ul>
+</li>
+<li><strong>功能資源：</strong> 
+<ul>
+<li>安全系統，包括監控、防火系統、疏散通道等。 </li>
+<li>環境控制系統，調節大樓的溫度、濕度和照明。 </li>
+<li>信息和通訊設施，如公共廣播系統、Wi-Fi 和光纖網絡。 </li>
+</ul>
+</li>
+<li><strong>資訊資源：</strong> 
+<ul>
+<li>關於大樓的資訊，例如建築結構、歷史、商店和服務指南。 </li>
+<li>人流和訪客數據，可以用來分析和調整商場策略或辦公空間管理。 </li>
+<li>建築和設計的原始資料和藍圖。 </li>
+</ul>
+</li>
+</ul>
+<p>這些建築和功能上的資源使台北101成為一個多功能、高效和持續運作的摩天大樓，可以滿足商業、觀光和其他多種需求。</p>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch05.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch07.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch05.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch07.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

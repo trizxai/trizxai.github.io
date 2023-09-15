@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>STC</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="mdbook-admonish.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00.html">TRIZ x AI</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">基礎篇</li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 九宮格</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 小精靈法(SLP)</a></li><li class="chapter-item expanded "><a href="ch03.html" class="active"><strong aria-hidden="true">3.</strong> STC</a></li><li class="chapter-item expanded "><a href="ch04.html"><strong aria-hidden="true">4.</strong> 最終理想解</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> 40發明原理</a></li><li class="chapter-item expanded "><a href="ch06.html"><strong aria-hidden="true">6.</strong> 資源</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">應用篇</li><li class="chapter-item expanded "><a href="ch07.html"><strong aria-hidden="true">7.</strong> 技術矛盾</a></li><li class="chapter-item expanded "><a href="ch08.html"><strong aria-hidden="true">8.</strong> 功能分析</a></li><li class="chapter-item expanded "><a href="ch09.html"><strong aria-hidden="true">9.</strong> 創新情境問卷(ISQ)</a></li><li class="chapter-item expanded "><a href="ch10.html"><strong aria-hidden="true">10.</strong> 科學效應</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><div>關於作者</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="stc"><a class="header" href="#stc">STC</a></h1>
+<div id="admonition-prompt-09" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 09</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-09"></a></p>
+</div>
+<div>
+<pre><code>請記住，另一種突破心智慣性的方法是STC法, 分別是Size, Time, Cost, 
+也就是分別發想Size, Time, Cost變成無限大或無限小的情況，
+以此來突破心智慣性，達到跳脫框架思考(Think out of the box)。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant"></a></p>
+</div>
+<div>
+<p>好的，我已經記住。STC法，即Size（大小）、Time（時間）、Cost（成本），是另一種用於突破心智慣性的方法。透過想像Size、Time、Cost變成無限大或無限小的情況，我們可以跳脫既有的思考框架，以創新的角度來看待問題並尋找解決方案。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-10" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 10</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-10"></a></p>
+</div>
+<div>
+<pre><code>使用STC法，發想創新的 [系統]或[元件] 
+
+[系統] 餐廳
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>使用STC法思考，我們可以嘗試透過變化餐廳的大小(Size)、時間(Time)、成本(Cost)來創新。以下是一些可能的想法： </p>
+<ol>
+<li>Size（大小）： 
+<ul>
+<li>無限大：設想一個規模極大的餐廳，顧客可以在各種獨特的主題環境中享用美食，比如森林、海灘、中世紀城堡等。這種體驗導向的餐飲概念可以提供顧客獨一無二的餐飲體驗。 </li>
+<li>無限小：設想一種小型化、個性化的餐廳模式，例如專為一桌客人提供服務的餐廳，或者開發便攜式的流動餐廳，能夠根據需求移動到顧客指定的地點。 </li>
+</ul>
+</li>
+<li>Time（時間）： 
+<ul>
+<li>無限長：創建一種24小時全天候運營的餐廳，無論何時顧客都能享用到美食。或者設想一種無限期的餐飲體驗，例如會員制度，付費後可在一段時間內無限次享用餐點。 </li>
+<li>無限短：開發一種即時制作、即時服務的快速餐飲模式，使顧客可以在極短的時間內享用到新鮮美食。 </li>
+</ul>
+</li>
+<li>Cost（成本）： 
+<ul>
+<li>無限高：開設一家高端餐廳，提供頂級食材和獨特的烹飪技巧，對顧客提供極致的餐飲體驗。 </li>
+<li>無限低：創建一種低成本但高效的餐廳模式，例如自助式餐廳，或利用食物科技，如3D打印食品等技術降低成本。</li>
+</ul>
+</li>
+</ol>
+<p>以上只是一些基本的創新想法，實際的創新過程可能需要根據具體的市場需求和餐廳的業務策略來調整和優化。</p>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

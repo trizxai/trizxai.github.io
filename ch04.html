@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>最終理想解</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="mdbook-admonish.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00.html">TRIZ x AI</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">基礎篇</li><li class="chapter-item expanded "><a href="ch01.html"><strong aria-hidden="true">1.</strong> 九宮格</a></li><li class="chapter-item expanded "><a href="ch02.html"><strong aria-hidden="true">2.</strong> 小精靈法(SLP)</a></li><li class="chapter-item expanded "><a href="ch03.html"><strong aria-hidden="true">3.</strong> STC</a></li><li class="chapter-item expanded "><a href="ch04.html" class="active"><strong aria-hidden="true">4.</strong> 最終理想解</a></li><li class="chapter-item expanded "><a href="ch05.html"><strong aria-hidden="true">5.</strong> 40發明原理</a></li><li class="chapter-item expanded "><a href="ch06.html"><strong aria-hidden="true">6.</strong> 資源</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">應用篇</li><li class="chapter-item expanded "><a href="ch07.html"><strong aria-hidden="true">7.</strong> 技術矛盾</a></li><li class="chapter-item expanded "><a href="ch08.html"><strong aria-hidden="true">8.</strong> 功能分析</a></li><li class="chapter-item expanded "><a href="ch09.html"><strong aria-hidden="true">9.</strong> 創新情境問卷(ISQ)</a></li><li class="chapter-item expanded "><a href="ch10.html"><strong aria-hidden="true">10.</strong> 科學效應</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><div>關於作者</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="最終理想解"><a class="header" href="#最終理想解">最終理想解</a></h1>
+<div id="admonition-prompt-11" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 11</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-11"></a></p>
+</div>
+<div>
+<pre><code>身為TRIZ專家顧問, 要知道系統演進到最後稱為最終理想解(Ideal Final Result, IFR), 
+理想的系統通常是功能最大化, 但資源消耗最少。 
+具體來說，IFR可能包括以下方面的理想： 
+功能無限大：系統能夠完全、自動地完成其任務。 
+系統無物質：理想狀態下的系統沒有物理形狀，不需要物質來建造或維護。 
+消耗無能源：理想狀態下的系統不需要消耗任何能源。 
+成本無價格：理想狀態下的系統不需要任何費用來建造或運營。
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant"></a></p>
+</div>
+<div>
+<p>對的，&quot;理想最終結果&quot;（Ideal Final Result，IFR）是TRIZ（發明問題解決理論）中的一個重要概念。它描述了一種理想狀態，即系統在未來發展中可能達到的最佳狀態。這種狀態不僅僅是一種預測，而是一種創新的指導思想，鼓勵我們儘可能地實現這種理想狀態。 
+IFR的基本原則是，系統的功能要最大化，同時資源的消耗要最小化。這意味著，我們應該追求使系統達到所需的全部功能，而不產生任何負面影響，並且在整個過程中消耗的資源要最少。 
+明顯的是，這些理想在現實世界中可能很難完全實現。然而，IFR的目的並不是要創建一個完全實現的系統，而是提供一個指導方向，幫助我們瞭解如何改進現有的系統，使其更接近這個理想狀態。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-12" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 12</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-12"></a></p>
+</div>
+<div>
+<pre><code>提出[系統]或[元件]的理想最終結果  
+
+[系統] 洗衣機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-1" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-1"></a></p>
+</div>
+<div>
+<p>洗衣機的理想最終結果（IFR）可以從多個方面來描述，主要體現在功能最大化和資源消耗最少化。以下是幾個可能的理想狀態： </p>
+<ul>
+<li><strong>自動洗衣：</strong> 在理想狀態下，洗衣機能夠完全自動地進行洗衣流程。用戶只需將脏衣物放入，洗衣機就能自動判斷衣物的材質、顏色和污垢程度，選擇最適合的洗衣模式和洗衣液量。洗衣結束後，洗衣機會自動將衣物乾燥和熨平，以便用戶直接穿著。 </li>
+<li><strong>零污染和零能源消耗：</strong> 理想狀態下的洗衣機不會產生任何環境污染，所有的洗衣液都是環保的，而且可以完全被生物分解。此外，洗衣機不需要使用外部能源，它可以利用衣物自身的污垢（例如油脂）作為能源來驅動洗衣過程。 </li>
+<li><strong>無物質：</strong> 理想的洗衣機不再是一個固定的、需要佔用空間的物理裝置。它可能是一種先進的科技，例如利用微生物或納米機器人來清潔衣物，甚至是一種直接在衣物上噴灑的液體或霧狀物質，能夠立即清除污垢。 </li>
+<li><strong>零成本：</strong> 理想狀態下的洗衣機不需要任何成本。由於它不需要能源，並且可以無限期地重複使用，所以用戶不需要支付任何費用。 </li>
+</ul>
+<p>以上都是洗衣機的理想最終結果。雖然這些理想在現實中可能很難完全實現，但是它們可以作為我們改進洗衣機設計的指導方向。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-13" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 13</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-13"></a></p>
+</div>
+<div>
+<pre><code>提出[系統]或[元件]的理想最終結果  
+
+[系統] 割草機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-2" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-2"></a></p>
+</div>
+<div>
+<p>割草機的理想最終結果（IFR）可以從多個方面來描述，主要體現在功能最大化和資源消耗最少化。以下是幾個可能的理想狀態： </p>
+<ul>
+<li><strong>完全自動化：</strong> 在理想狀態下，割草機能夠自動識別需要割草的區域、草的種類和高度，並能自動選擇最適當的割草方式。它可以在任何時間自動開始和結束工作，並在割草完成後自動返回充電站。此外，它可以自我學習，通過分析過去的割草紀錄來不斷提高其效率和效果。 </li>
+<li><strong>零能源消耗和零污染：</strong> 理想狀態下的割草機能夠利用太陽能或其他可再生能源來驅動，無需消耗化石燃料。同時，它不會產生任何對環境有害的排放，也不會產生噪音污染。 </li>
+<li><strong>具有創新功能：</strong> 除了割草，理想的割草機也可以對草地進行其他照護，例如自動施肥、除草和澆水。它也可以回收割下的草，並將其轉化為有價值的資源，如肥料或能源。 </li>
+<li><strong>長壽和無需維護：</strong> 理想狀態下的割草機具有很高的耐用性，不易損壞或磨損，並且在其整個使用壽命中都不需要進行維護或更換零件。 </li>
+<li><strong>低成本：</strong> 理想的割草機在購買和運行過程中的成本都非常低。因為它使用的是可再生能源，並且幾乎不需要進行維護，所以用戶不需要為其支付額外的運行費用。 </li>
+</ul>
+<p>以上都是割草機的理想最終結果。雖然這些理想在現實中可能很難完全實現，但是它們可以作為我們改進割草機設計的指導方向。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-14" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 14</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-14"></a></p>
+</div>
+<div>
+<pre><code>跳脫[系統]或[元件]的框架, 提出[系統]或[元件]的理想最終結果  
+
+[系統] 割草機
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-3" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-3"></a></p>
+</div>
+<div>
+<p>理想最終結果(IFR)的提出並不一定要侷限在現有的系統或元件框架內。對於割草機這個系統，我們可以跳脫現有框架，從全新的角度思考其理想最終結果： </p>
+<ul>
+<li><strong>自我維護的草地：</strong> 理想的狀態可能是我們不再需要割草機，因為草地自己就能保持適當的高度。這可能通過生物工程來達成，例如研發一種新型的草，這種草在達到一定的高度後就會停止生長，或者能自我修剪。 </li>
+<li><strong>無需人工參與的草地維護：</strong> 不僅僅是割草，理想的狀態可能是所有的草地維護工作都可以自動完成，包括施肥、灌溉和控制害蟲。這可能需要一種集成了各種功能的「智能草地系統」，這個系統能自動感知和調節草地的狀態。 </li>
+<li><strong>對環境有益的草地：</strong> 在理想的狀態下，草地不僅美觀，還對環境有益。例如，草地能吸收並儲存大量的二氧化碳，從而有助於減少溫室氣體排放。另外，草地也可能有其他有益的功能，比如提供野生動物的棲息地，或者生產可再生能源。 </li>
+</ul>
+<p>以上都是跳脫現有割草機框架的理想最終結果。實現這些理想可能需要跨領域的合作，包括生物工程、機器學習、環境科學等多種專業領域。</p>
+</div>
+</div>
+<hr />
+<div id="admonition-prompt-15" class="admonition info">
+<div class="admonition-title">
+<p>Prompt 15</p>
+<p><a class="admonition-anchor-link" href="#admonition-prompt-15"></a></p>
+</div>
+<div>
+<pre><code>跳脫[系統]或[元件]的框架, 提出[系統]或[元件]的理想最終結果  
+
+[系統] 冰箱
+</code></pre>
+</div>
+</div>
+<div id="admonition-assistant-4" class="admonition example">
+<div class="admonition-title">
+<p>Assistant</p>
+<p><a class="admonition-anchor-link" href="#admonition-assistant-4"></a></p>
+</div>
+<div>
+<p>跳脫現有的冰箱框架，我們可以想像以下的理想最終結果（IFR）： </p>
+<ul>
+<li><strong>無需儲存：</strong> 最理想的情況可能是我們根本不需要冰箱儲存食物。這可以通過各種方式實現，比如提高食物的保存技術，讓食物能在常溫下長時間保鮮；或者改變我們的飲食習慣和供應鏈，讓我們可以隨時獲取新鮮的食物，無需提前購買和儲存。 </li>
+<li><strong>智能供應：</strong> 另一種理想狀態可能是一種能根據我們的需求和營養需求自動提供食物的系統。這個系統不僅可以保存食物，還能自動計劃和準備餐點，甚至能生產食物。 </li>
+<li><strong>環境友好：</strong> 理想的冰箱系統不會對環境造成負面影響。它能利用可再生能源工作，不產生噪音，也不釋放對臭氧層有害的化學物質。此外，這種理想的系統在其生命周期結束時，能夠完全回收並無害處理，不產生廢物。 </li>
+</ul>
+<p>以上都是跳脫現有冰箱框架的理想最終結果。當然，這些理想在現實中可能難以實現，但它們可以提供一個指導我們改進冰箱設計的方向。</p>
+</div>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
